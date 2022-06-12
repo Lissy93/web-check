@@ -1,21 +1,24 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Styled from 'styled-components';
-import Demo from 'components/Demo';
+import Home from 'pages/Home';
+import colors from 'styles/colors';
 import 'App.css';
 
-const Container = Styled.div`
-  background: #bfc;
-  width: fit-content;
-  margin: 1rem auto;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+const Container = Styled.main`
+  background: ${colors.background};
+  color: ${colors.textColor};
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 `;
 
 function App() {
   return (
-    <Container className="App">
-      <h1>Hello 👋</h1>
-      <Demo message="React is Dumb," />
+    <Container>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </Container>
   );
 }
