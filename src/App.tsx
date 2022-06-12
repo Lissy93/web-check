@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Styled from 'styled-components';
 import Home from 'pages/Home';
