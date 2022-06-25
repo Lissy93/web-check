@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import Styled from 'styled-components';
 import Home from 'pages/Home';
 import colors from 'styles/colors';
-import 'App.css';
 
 const Container = Styled.main`
   background: ${colors.background};
