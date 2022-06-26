@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate, NavigateOptions } from 'react-router-dom';
 
-import colors from 'styles/colors';
 import Heading from 'components/Form/Heading';
 import Input from 'components/Form/Input'
 import Button from 'components/Form/Button';
 import FancyBackground from 'components/misc/FancyBackground';
 
+import colors from 'styles/colors';
 import { determineAddressType } from 'utils/address-type-checker';
 
 const HomeContainer = styled.section`
@@ -18,7 +19,7 @@ const HomeContainer = styled.section`
   font-family: 'PTMono';
 `;
 
-const UserInputMain = styled.div`
+const UserInputMain = styled.form`
   background: ${colors.backgroundLighter};
   box-shadow: 4px 4px 0px ${colors.bgShadowColor};
   border-radius: 8px;
@@ -29,19 +30,47 @@ const UserInputMain = styled.div`
   margin: 1rem;
 `;
 
+const ErrorMessage = styled.p`
+  color: ${colors.danger};
+  margin: 0.5rem;
+`;
+
 const Home = (): JSX.Element => {
   const [userInput, setUserInput] = useState('');
+  const [errorMsg, setErrMsg] = useState('');
+  const navigate = useNavigate();
 
+  /* Check is valid address, either show err or redirect to results page */
   const submit = () => {
-    // TODO - Submit form, using the following data:
-    console.log('Will Submit with: ', userInput);
-    console.log('Address Type: ', determineAddressType(userInput));
+    const address = userInput;
+    const addressType = determineAddressType(address);
+
+    if (addressType === 'empt') {
+      setErrMsg('Field must not be empty');
+    } else if (addressType === 'err') {
+      setErrMsg('Must be a valid URL, IPv4 or IPv6 Address');
+    } else {
+      const resultRouteParams: NavigateOptions = { state: { address, addressType } };
+      navigate('/results', resultRouteParams);
+    }
   };
+
+  /* Update user input state, and hide error message if field is valid */
+  const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUserInput(event.target.value);
+    const isError = ['err', 'empt'].includes(determineAddressType(event.target.value));
+    if (!isError) setErrMsg('');
+  };
+
+  const formSubmitEvent = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submit();
+  }
 
   return (
     <HomeContainer>
       <FancyBackground />
-      <UserInputMain>
+      <UserInputMain onSubmit={formSubmitEvent}>
         <Heading as="h1" size="large" align="center" color={colors.primary}>Web Check</Heading>
         <Input
           id="user-input"
@@ -50,8 +79,9 @@ const Home = (): JSX.Element => {
           size="large"
           orientation="vertical"
           placeholder="e.g. https://duck.com"
-          handleChange={(e) => setUserInput(e.target.value)}
+          handleChange={inputChange}
         />
+        { errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
         <Button size="large" onClick={submit}>Analyze!</Button>
       </UserInputMain>
     </HomeContainer>
