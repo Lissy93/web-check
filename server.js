@@ -145,4 +145,5 @@ const printMessage = () => {
 app.listen(port, () => {
   printMessage();
 });
+console.log{"now awesome"};
 
