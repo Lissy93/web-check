@@ -13,10 +13,10 @@
   # NODE_VERSION = "16.16.0"  # Set the version of Node.js to use
 
   # Optional secrets and API keys (uncomment if you want to add these)
-  # GOOGLE_CLOUD_API_KEY=''     # Google Cloud API key, for running Lighthouse scans
-  # BUILT_WITH_API_KEY=''       # BuiltWith API key, for detecting site features
-  # REACT_APP_SHODAN_API_KEY='' # Shodan API key, for using Shodan scan API
-  # REACT_APP_WHO_API_KEY=''    # WhoAPI key, for iniiating client-side whois lookup
+  # GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY=''     # Google Cloud API key, for running Lighthouse scans
+  # BUILT_WITH_API_KEY=''                     # BuiltWith API key, for detecting site features
+  # REACT_APP_SHODAN_API_KEY=''               # Shodan API key, for using Shodan scan API
+  # REACT_APP_WHO_API_KEY=''                  # WhoAPI key, for iniiating client-side whois lookup
 
 # Redirect the /api/* path to the lambda functions
 [[redirects]]

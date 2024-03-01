@@ -4,9 +4,9 @@ const middleware = require('./_common/middleware');
 
 const getGoogleSafeBrowsingResult = async (url) => {
   try {
-    const apiKey = process.env.GOOGLE_CLOUD_API_KEY;
+    const apiKey = process.env.GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY;
     if (!apiKey) {
-      return { error: 'GOOGLE_CLOUD_API_KEY is required for the Google Safe Browsing check' };
+      return { error: 'GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY is required for the Google Safe Browsing check' };
     }
     const apiEndpoint = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
 

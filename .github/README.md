@@ -799,14 +799,14 @@ But there are some optional environmental variables that you can set to give you
 
 Key | Value
 ---|---
-`GOOGLE_CLOUD_API_KEY` | A Google API key ([get here](https://cloud.google.com/api-gateway/docs/authenticate-api-keys)). This can be used to return quality metrics for a site
+`GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY` | A Google Page Speed Insights API key ([get here](https://developers.google.com/speed/docs/insights/v5/get-started)). This is used for running Lighthouse scans
 `REACT_APP_SHODAN_API_KEY` | A Shodan API key ([get here](https://account.shodan.io/)). This will show associated host names for a given domain
 `REACT_APP_WHO_API_KEY` | A WhoAPI key ([get here](https://whoapi.com/)). This will show more comprehensive WhoIs records than the default job
 
 <details>
   <summary><small>Full / Upcoming Vals</small></summary>
   
-- `GOOGLE_CLOUD_API_KEY` - A Google API key ([get here](https://cloud.google.com/api-gateway/docs/authenticate-api-keys)). This can be used to return quality metrics for a site
+- `GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY` - A Google Page Speed Insights API key ([get here](https://developers.google.com/speed/docs/insights/v5/get-started)). This is used for running Lighthouse scans
 - `REACT_APP_SHODAN_API_KEY` - A Shodan API key ([get here](https://account.shodan.io/)). This will show associated host names for a given domain
 - `REACT_APP_WHO_API_KEY` - A WhoAPI key ([get here](https://whoapi.com/)). This will show more comprehensive WhoIs records than the default job
 - `SECURITY_TRAILS_API_KEY` - A Security Trails API key ([get here](https://securitytrails.com/corp/api)). This will show org info associated with the IP
