@@ -1,20 +1,27 @@
 # Build stage
-FROM node:16-buster-slim AS build
+FROM node:20-buster-slim AS base
 
 WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN apt-get update && \
-    yarn install --production && \
-    rm -rf /app/node_modules/.cache
+RUN apt update -y && \
+    apt upgrade -y 
 
+FROM base as dev
+
+RUN yarn && \
+    rm -rf /app/node_modules/.cache
+ENTRYPOINT ["yarn"]
+
+FROM base AS build
 COPY . .
 
-RUN yarn build --production
+RUN yarn build --production && \
+    rm -rf /app/node_modules/.cache
 
 # Final stage
-FROM node:16-buster-slim AS final
+FROM node:20-buster-slim AS final
 
 WORKDIR /app
 
