@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  web-check:
+    container_name: Web-Check
+    command: dev
+    build:
+      target: dev
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8888
