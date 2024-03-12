@@ -257,9 +257,9 @@ const About = (): JSX.Element => {
 
         <ul>
           <li>
-            <code>GOOGLE_CLOUD_API_KEY</code>
-            : <a href="https://cloud.google.com/api-gateway/docs/authenticate-api-keys">A Google API key</a>
-            <i> Used to return quality metrics for a site</i>
+            <code>GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY</code>
+            : <a href="https://developers.google.com/speed/docs/insights/v5/get-started">A Google Page Speed Insights API key</a>
+            <i> This is used for running Lighthouse scans</i>
           </li>
           <li>
             <code>REACT_APP_SHODAN_API_KEY</code>

@@ -5,7 +5,7 @@ provider:
   runtime: nodejs14.x
   region: us-east-1
   # environment:
-  #   GOOGLE_CLOUD_API_KEY: ${ssm:GOOGLE_CLOUD_API_KEY~true, ''}
+  #   GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY: ${ssm:GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY~true, ''}
   #   TORRENT_IP_API_KEY: ${ssm:TORRENT_IP_API_KEY~true, ''}
   #   SECURITY_TRAILS_API_KEY: ${ssm:SECURITY_TRAILS_API_KEY~true, ''}
   #   BUILT_WITH_API_KEY: ${ssm:BUILT_WITH_API_KEY~true, ''}
@@ -21,7 +21,7 @@ provider:
       Action:
         - ssm:GetParameter
       Resource:
-        - arn:aws:ssm:us-east-1:${env:AWS_ACCOUNT_ID}:parameter/GOOGLE_CLOUD_API_KEY
+        - arn:aws:ssm:us-east-1:${env:AWS_ACCOUNT_ID}:parameter/GOOGLE_PAGE_SPEED_INSIGHTS_API_KEY
         - arn:aws:ssm:us-east-1:${env:AWS_ACCOUNT_ID}:parameter/TORRENT_IP_API_KEY
         - arn:aws:ssm:us-east-1:${env:AWS_ACCOUNT_ID}:parameter/SECURITY_TRAILS_API_KEY
         - arn:aws:ssm:us-east-1:${env:AWS_ACCOUNT_ID}:parameter/BUILT_WITH_API_KEY
