@@ -779,7 +779,15 @@ Click the button below, to deploy to Vercel 👇
 
 ### Deploying - Option #3: Docker
 
+Pull Image: `docker pull lissy93/web-check`
+
 Run `docker run -p 3000:3000 lissy93/web-check`, then open [`localhost:3000`](http://localhost:3000)
+
+or:
+
+Run `docker -d --name webcheck -p 3000:3000 --restart=always lissy93/web-check`, then open [`localhost:3000`](http://localhost:3000)
+
+This command sets up a detached container, gives it a name (webcheck), and configures it to auto-restart, enabling continuous operation in your environment for OSINT searches.
 
 <details>
 <summary>Docker Options</summary>
