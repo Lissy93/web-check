@@ -27,7 +27,7 @@ COPY package.json yarn.lock ./
 
 # Run yarn install to install dependencies and clear yarn cache
 RUN apk update && \
-    apk add --no-cache yarn && \
+    apk add --no-cache yarn git && \
     yarn install --production --frozen-lockfile --network-timeout 100000 && \
     rm -rf /app/node_modules/.cache
 
