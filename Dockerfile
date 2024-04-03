@@ -1,8 +1,8 @@
 # Specify the Node.js version to use
-ARG NODE_VERSION=16
+ARG NODE_VERSION=20
 
 # Specify the Debian version to use, the default is "bullseye"
-ARG DEBIAN_VERSION=bullseye
+ARG DEBIAN_VERSION=bookworm-slim
 
 # Use Node.js Docker image as the base image, with specific Node and Debian versions
 FROM node:${NODE_VERSION}-${DEBIAN_VERSION} AS build
@@ -16,7 +16,7 @@ RUN apt-get update -qq --fix-missing && \
     wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
     apt-get update -qq && \
-    apt-get -qqy --no-install-recommends install chromium traceroute python make g++ && \
+    apt-get -qqy --no-install-recommends install chromium traceroute python3 make g++ && \
     rm -rf /var/lib/apt/lists/* 
 
 # Run the Chromium browser's version command and redirect its output to the /etc/chromium-version file
