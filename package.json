@@ -59,7 +59,7 @@
     "react-dom": "^18.2.0",
     "react-masonry-css": "^1.0.16",
     "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
+    "react-scripts-dependencies-upgraded": "1.6.2",
     "react-simple-maps": "^3.0.0",
     "react-toastify": "^9.1.3",
     "recharts": "^2.12.3",
