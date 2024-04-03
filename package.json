@@ -25,6 +25,7 @@
     "dev:node": "npx concurrently --names \"frontend,backend\" \"REACT_APP_API_ENDPOINT='http://localhost:3001/api' npx react-scripts start\" \"PLATFORM='node' DISABLE_GUI='true' PORT='3001' API_CORS_ORIGIN='*' npx nodemon server\""
   },
   "dependencies": {
+    "@babel/plugin-transform-private-property-in-object": "7.24.1",
     "@netlify/functions": "^2.6.0",
     "@sentry/react": "^7.109.0",
     "@testing-library/jest-dom": "^6.4.2",

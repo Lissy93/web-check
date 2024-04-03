@@ -1812,7 +1812,7 @@
     "@babel/helper-create-class-features-plugin" "^7.24.1"
     "@babel/helper-plugin-utils" "^7.24.0"
 
-"@babel/plugin-transform-private-property-in-object@^7.23.4", "@babel/plugin-transform-private-property-in-object@^7.24.1":
+"@babel/plugin-transform-private-property-in-object@7.24.1", "@babel/plugin-transform-private-property-in-object@^7.23.4", "@babel/plugin-transform-private-property-in-object@^7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-private-property-in-object/-/plugin-transform-private-property-in-object-7.24.1.tgz#756443d400274f8fb7896742962cc1b9f25c1f6a"
   integrity sha512-pTHxDVa0BpUbvAgX3Gat+7cSciXqUcY9j2VZKTbSB6+VQGpNgNO9ailxTGHSXlqOnX1Hcx1Enme2+yv7VqP9bg==
@@ -15521,13 +15521,13 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
-react-dom@^18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
-  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+react-dom@^18.3.0-canary-a870b2d54-20240314:
+  version "18.3.0-next-fecc288b7-20221025"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.0-next-fecc288b7-20221025.tgz#f06afce21f68a6797eb4c740637aa844c7918bcd"
+  integrity sha512-EczZNIcOXzLFyPhSXpplVFekfUvbtHRC68TVAPfCopn8YxjMg2ROVgYs1VdSnEu2JlXKvpeIbjexAuhDprsp/A==
   dependencies:
     loose-envify "^1.1.0"
-    scheduler "^0.23.0"
+    scheduler "0.24.0-next-fecc288b7-20221025"
 
 react-error-overlay@^6.0.11:
   version "6.0.11"
@@ -15666,10 +15666,10 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
-  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+react@^18.3.0-canary-a870b2d54-20240314:
+  version "18.3.0-next-fecc288b7-20221025"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.3.0-next-fecc288b7-20221025.tgz#8da77f8c8221bb2761ed817b7638feb108ba791c"
+  integrity sha512-lKvCNWRO9XPy8q7hLd0ODK/4Oqr54r3Vr49Y7EyNBz/kfsmNT6Vx0F69KRz/eGcbt1XDvtbA7KZd+mh8w3wONQ==
   dependencies:
     loose-envify "^1.1.0"
 
@@ -16222,10 +16222,10 @@ saxes@^6.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-scheduler@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
-  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
+scheduler@0.24.0-next-fecc288b7-20221025:
+  version "0.24.0-next-fecc288b7-20221025"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.24.0-next-fecc288b7-20221025.tgz#0f4b174cf0ee5866b78855f4bf41142cc3cecc0e"
+  integrity sha512-D2r7z/2EbRXXz4k8XRQab2l71zARIwmZzLLGPAM936/dW1iF835+FMwnOe4Iep96vNJAdQavqJBP4Fm+/MadsQ==
   dependencies:
     loose-envify "^1.1.0"
 
