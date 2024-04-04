@@ -214,19 +214,13 @@ const About = (): JSX.Element => {
       <Heading as="h2" size="medium" color={colors.primary}>Deploy your own Instance</Heading>
       <Section>
         <p>Web-Check is designed to be easily self-hosted.</p>
-        <Heading as="h3" size="small" color={colors.primary}>Option #1 - Netlify</Heading>
-        <p>Click the button below to deploy to Netlify</p>
-        <a href="https://app.netlify.com/start/deploy?repository=https://github.com/lissy93/web-check">
-          <img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />
-        </a>
-
-        <Heading as="h3" size="small" color={colors.primary}>Option #2 - Vercel</Heading>
+        <Heading as="h3" size="small" color={colors.primary}>Option #1 - Vercel</Heading>
         <p>Click the button below to deploy to Vercel</p>
         <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flissy93%2Fweb-check&project-name=web-check&repository-name=web-check-fork&demo-title=Web-Check%20Demo&demo-description=Check%20out%20web-check.xyz%20to%20see%20a%20live%20demo%20of%20this%20application%20running.&demo-url=https%3A%2F%2Fweb-check.xyz&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FLissy93%2Fweb-check%2Fmaster%2F.github%2Fscreenshots%2Fweb-check-screenshot10.png">
           <img src="https://vercel.com/button" alt="Deploy with Vercel" />
         </a>
 
-        <Heading as="h3" size="small" color={colors.primary}>Option #3 - Docker</Heading>
+        <Heading as="h3" size="small" color={colors.primary}>Option #2 - Docker</Heading>
         <p>
         A Docker container is published to <a href="https://hub.docker.com/r/lissy93/web-check">DockerHub</a>
         <br />
@@ -234,7 +228,7 @@ const About = (): JSX.Element => {
         <pre>docker run -p 3000:3000 lissy93/web-check</pre>
         </p>
 
-        <Heading as="h3" size="small" color={colors.primary}>Option #4 - Manual</Heading>
+        <Heading as="h3" size="small" color={colors.primary}>Option #3 - Manual</Heading>
         <pre>
         git clone https://github.com/Lissy93/web-check.git<br />
         cd web-check # Move into the project directory<br />

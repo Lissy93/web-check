@@ -15,18 +15,15 @@
     "url": "https://github.com/sponsors/Lissy93"
   },
   "scripts": {
-    "dev": "netlify dev",
     "serve": "node server",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "dev:vercel": "PLATFORM='vercel' npx vercel dev",
-    "dev:netlify": "PLATFORM='netlify' npx netlify dev",
     "dev:node": "npx concurrently --names \"frontend,backend\" \"REACT_APP_API_ENDPOINT='http://localhost:3001/api' npx react-scripts start\" \"PLATFORM='node' DISABLE_GUI='true' PORT='3001' API_CORS_ORIGIN='*' npx nodemon server\""
   },
   "dependencies": {
     "@babel/plugin-transform-private-property-in-object": "7.24.1",
-    "@netlify/functions": "^2.6.0",
     "@sentry/react": "^7.109.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
@@ -51,7 +48,6 @@
     "follow-redirects": "^1.15.6",
     "got": "^14.2.1",
     "jest-styled-components": "^7.2.0",
-    "netlify-cli": "^17.21.1",
     "perf_hooks": "^0.0.1",
     "psl": "^1.9.0",
     "puppeteer": "^22.6.2",
