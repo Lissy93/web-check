@@ -36,10 +36,9 @@
   - [Features](#features)
 - **[Usage](#usage)**
   - [Deployment](#deployment)
-    - [Option#1: Netlify](#deploying---option-1-netlify)
-    - [Option#2: Vercel](#deploying---option-2-vercel)
-    - [Option#3: Docker](#deploying---option-3-docker)
-    - [Option#4: Source](#deploying---option-4-from-source)
+    - [Option#1: Vercel](#deploying---option-2-vercel)
+    - [Option#2: Docker](#deploying---option-3-docker)
+    - [Option#3: Source](#deploying---option-4-from-source)
   - [Configuration Options](#configuring)
   - [Developer Setup](#developing)
 - **[Community](#community)**
@@ -77,7 +76,6 @@ The source for this repo is mirrored to CodeBerg, available at: **[codeberg.org/
 ### Status
 
 
-Build & Deploys: [![Netlify Status](https://api.netlify.com/api/v1/badges/c43453c1-5333-4df7-889b-c1d2b52183c0/deploy-status)](https://app.netlify.com/sites/web-check/deploys)
 [![Vercel Status](https://therealsujitk-vercel-badge.vercel.app/?app=web-check-ten)](https://vercel.com/as93/web-check/)
 [![🐳 Build + Publish Docker Image](https://github.com/Lissy93/web-check/actions/workflows/docker.yml/badge.svg)](https://github.com/Lissy93/web-check/actions/workflows/docker.yml)
 [![🚀 Deploy to AWS](https://github.com/Lissy93/web-check/actions/workflows/deploy-aws.yml/badge.svg)](https://github.com/Lissy93/web-check/actions/workflows/deploy-aws.yml)
@@ -748,19 +746,13 @@ Read more here: **[web-check.xyz/about](https://web-check.xyz/about)**
 
 ### Deployment
 
-### Deploying - Option #1: Netlify
-
-Click the button below, to deploy to Netlify 👇
-
-[![Deploy to Netlify](https://img.shields.io/badge/Deploy-Netlify-%2330c8c9?style=for-the-badge&logo=netlify&labelColor=1e0e41 'Deploy Web-Check to Netlify, via 1-Click Script')](https://app.netlify.com/start/deploy?repository=https://github.com/lissy93/web-check)
-
-### Deploying - Option #2: Vercel
+### Deploying - Option #1: Vercel
 
 Click the button below, to deploy to Vercel 👇
 
 [![Deploy with Vercel](https://img.shields.io/badge/Deploy-Vercel-%23ffffff?style=for-the-badge&logo=vercel&labelColor=1e0e41)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flissy93%2Fweb-check&project-name=web-check&repository-name=web-check-fork&demo-title=Web-Check%20Demo&demo-description=Check%20out%20web-check.xyz%20to%20see%20a%20live%20demo%20of%20this%20application%20running.&demo-url=https%3A%2F%2Fweb-check.xyz&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FLissy93%2Fweb-check%2Fmaster%2F.github%2Fscreenshots%2Fweb-check-screenshot10.png)
 
-### Deploying - Option #3: Docker
+### Deploying - Option #2: Docker
 
 Run `docker run -p 3000:3000 lissy93/web-check`, then open [`localhost:3000`](http://localhost:3000)
 
@@ -774,7 +766,7 @@ You can get the Docker image from:
 
 </details>
 
-### Deploying - Option #4: From Source
+### Deploying - Option #3: From Source
 
 Install the prerequisites listed in the [Developing](#developing) section, then run: 
 
@@ -832,7 +824,7 @@ Key | Value
 
 All values are optional.
 
-You can add these as environmental variables. Either put them directly into an `.env` file in the projects root, or via the Netlify / Vercel UI, or by passing to the Docker container with the --env flag, or using your own environmental variable management system
+You can add these as environmental variables. Either put them directly into an `.env` file in the projects root, or via the  Vercel UI, or by passing to the Docker container with the --env flag, or using your own environmental variable management system
 
 Note that keys that are prefixed with `REACT_APP_` are used client-side, and as such they must be scoped correctly with minimum privileges, since may be made visible when intercepting browser <-> server network requests
 
