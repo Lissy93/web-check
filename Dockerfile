@@ -12,7 +12,6 @@ FROM node:${NODE_VERSION}-${OS_VERSION} AS build
 
 # Install Chromium browser and Download and verify Google Chrome’s signing key
 RUN apk update && \
-    apk add --no-cache gnupg wget && \
     apk add --no-cache chromium python3 make g++ && \
     rm -rf /var/cache/apk/*
 
