@@ -9,7 +9,7 @@ const TIMEOUT = process.env.API_TIMEOUT_LIMIT ? parseInt(process.env.API_TIMEOUT
 const ALLOWED_ORIGINS = process.env.API_CORS_ORIGIN || '*';
 
 // Set the platform currently being used
-let PLATFORM = 'NETLIFY';
+let PLATFORM = '';
 if (process.env.PLATFORM) { PLATFORM = process.env.PLATFORM.toUpperCase(); }
 else if (process.env.VERCEL) { PLATFORM = 'VERCEL'; }
 else if (process.env.WC_SERVER) { PLATFORM = 'NODE'; }
@@ -20,7 +20,6 @@ const headers = {
   'Access-Control-Allow-Credentials': true,
   'Content-Type': 'application/json;charset=UTF-8',
 };
-
 
 const timeoutErrorMsg = 'You can re-trigger this request, by clicking "Retry"\n'
 + 'If you\'re running your own instance of Web Check, then you can '
@@ -78,50 +77,9 @@ const commonMiddleware = (handler) => {
     }
   };
 
-  // Netlify
-  const netlifyHandler = async (event, context, callback) => {
-    const queryParams = event.queryStringParameters || event.query || {};
-    const rawUrl = queryParams.url;
-
-    if (!rawUrl) {
-      callback(null, {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'No URL specified' }),
-        headers,
-      });
-      return;
-    }
-
-    const url = normalizeUrl(rawUrl);
-
-    try {
-      // Race the handler against the timeout
-      const handlerResponse = await Promise.race([
-        handler(url, event, context),
-        createTimeoutPromise(TIMEOUT)
-      ]);
-
-      if (handlerResponse.body && handlerResponse.statusCode) {
-        callback(null, handlerResponse);
-      } else {
-        callback(null, {
-          statusCode: 200,
-          body: typeof handlerResponse === 'object' ? JSON.stringify(handlerResponse) : handlerResponse,
-          headers,
-        });
-      }
-    } catch (error) {
-      callback(null, {
-        statusCode: 500,
-        body: JSON.stringify({ error: error.message }),
-        headers,
-      });
-    }
-  };
-
   // The format of the handlers varies between platforms
   const nativeMode = (['VERCEL', 'NODE'].includes(PLATFORM));
-  return nativeMode ? vercelHandler : netlifyHandler;
+  return nativeMode ? vercelHandler : undefined; // Here, we remove or make undefined the Netlify handler
 };
 
 module.exports = commonMiddleware;
