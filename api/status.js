@@ -22,8 +22,13 @@ const handler = async (url) => {
 
   try {
     startTime = performance.now();
+    const options = {
+      headers: {
+        'User-Agent': 'Web_Check'
+      }
+    };
     const response = await new Promise((resolve, reject) => {
-      const req = https.get(url, res => {
+      const req = https.get(url, options, res => {
         let data = '';
         responseCode = res.statusCode;
         res.on('data', chunk => {
