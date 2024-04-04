@@ -213,12 +213,6 @@ functions:
       - http:
           path: api/tls
           method: get
-  traceRoute:
-    handler: api/trace-route.handler
-    events:
-      - http:
-          path: api/trace-route
-          method: get
   txtRecords:
     handler: api/txt-records.handler
     events:

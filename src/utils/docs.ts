@@ -182,20 +182,6 @@ const docs: Doc[] = [
     screenshot: 'https://i.ibb.co/F8D1hmf/wc-ports.png',
   },
   {
-    id: "trace-route",
-    title: "Traceroute",
-    description:
-      "Traceroute is a network diagnostic tool used to track in real-time the pathway taken by a packet of information from one system to another. It records each hop along the route, providing details about the IPs of routers and the delay at each point.",
-    use: "In OSINT investigations, traceroute can provide insights about the routing paths and geography of the network infrastructure supporting a website or service. This can help to identify network bottlenecks, potential censorship or manipulation of network traffic, and give an overall sense of the network's structure and efficiency. Additionally, the IP addresses collected during the traceroute may provide additional points of inquiry for further OSINT investigation.",
-    resources: [
-      "https://www.cloudflare.com/learning/network-layer/what-is-traceroute/",
-      "https://tools.ietf.org/html/rfc1393",
-      "https://en.wikipedia.org/wiki/Traceroute",
-      "https://www.ripe.net/publications/docs/ripe-611",
-    ],
-    screenshot: 'https://i.ibb.co/M59qgxP/wc-trace-route.png',
-  },
-  {
     id: "carbon",
     title: "Carbon Footprint",
     description:

@@ -53,7 +53,7 @@
 ## About
 Get an insight into the inner-workings of a given website: uncover potential attack vectors, analyse server architecture, view security configurations, and learn what technologies a site is using.
 
-Currently the dashboard will show: IP info, SSL chain, DNS records, cookies, headers, domain info, search crawl rules, page map, server location, redirect ledger, open ports, traceroute, DNS security extensions, site performance, trackers, associated hostnames, carbon footprint. Stay tuned, as I'll add more soon!
+Currently the dashboard will show: IP info, SSL chain, DNS records, cookies, headers, domain info, search crawl rules, page map, server location, redirect ledger, open ports, DNS security extensions, site performance, trackers, associated hostnames, carbon footprint. Stay tuned, as I'll add more soon!
 
 The aim is to help you easily understand, optimize and secure your website.
 
@@ -320,24 +320,7 @@ Knowing which ports are open on a server can provide information about the servi
 - [NMAP - Port Scanning Basics](https://nmap.org/book/man-port-scanning-basics.html)
 
 </details>
-<details>
-<summary><b>Traceroute</b></summary>
 
-<img width="300" src="https://i.ibb.co/M59qgxP/wc-trace-route.png" align="right" />
-
-###### Description
-Traceroute is a network diagnostic tool used to track in real-time the pathway taken by a packet of information from one system to another. It records each hop along the route, providing details about the IPs of routers and the delay at each point.
-
-###### Use Cases
-In OSINT investigations, traceroute can provide insights about the routing paths and geography of the network infrastructure supporting a website or service. This can help to identify network bottlenecks, potential censorship or manipulation of network traffic, and give an overall sense of the network's structure and efficiency. Additionally, the IP addresses collected during the traceroute may provide additional points of inquiry for further OSINT investigation.
-
-###### Useful Links
-- [undefined](function link() { [native code] })
-- [undefined](function link() { [native code] })
-- [undefined](function link() { [native code] })
-- [undefined](function link() { [native code] })
-
-</details>
 <details>
 <summary><b>Carbon Footprint</b></summary>
 
@@ -863,7 +846,7 @@ Note that keys that are prefixed with `REACT_APP_` are used client-side, and as 
 4. Start the dev server, with `yarn dev`
 
 You'll need [Node.js](https://nodejs.org/en) (V 18.16.1 or later) installed, plus [yarn](https://yarnpkg.com/getting-started/install) as well as [git](https://git-scm.com/).
-Some checks also require `chromium`, `traceroute` and `dns` to be installed within your environment. These jobs will just be skipped if those packages aren't present.
+Some checks also require `chromium` and `dns` to be installed within your environment. These jobs will just be skipped if those packages aren't present.
 
 
 ---

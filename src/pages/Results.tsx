@@ -35,7 +35,6 @@ import RedirectsCard from 'components/Results/Redirects';
 import TxtRecordCard from 'components/Results/TxtRecords';
 import ServerStatusCard from 'components/Results/ServerStatus';
 import OpenPortsCard from 'components/Results/OpenPorts';
-import TraceRouteCard from 'components/Results/TraceRoute';
 import CarbonFootprintCard from 'components/Results/CarbonFootprint';
 import SiteFeaturesCard from 'components/Results/SiteFeatures';
 import DnsSecCard from 'components/Results/DnsSec';
@@ -362,15 +361,6 @@ const Results = (): JSX.Element => {
     addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly },
     fetchRequest: () => fetch(`${api}/social-tags?url=${address}`).then(res => parseJson(res)),
   });
-
-  // Get trace route for a given hostname
-  const [traceRouteResults, updateTraceRouteResults] = useMotherHook({
-    jobId: 'trace-route',
-    updateLoadingJobs,
-    addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly },
-    fetchRequest: () => fetch(`${api}/trace-route?url=${address}`).then(res => parseJson(res)),
-  });
-
   // Get a websites listed pages, from sitemap
   const [securityTxtResults, updateSecurityTxtResults] = useMotherHook({
     jobId: 'security-txt',
@@ -667,13 +657,6 @@ const Results = (): JSX.Element => {
       Component: SocialTagsCard,
       refresh: updateSocialTagResults,
       tags: ['client', 'meta'],
-    }, {
-      id: 'trace-route',
-      title: 'Trace Route',
-      result: traceRouteResults,
-      Component: TraceRouteCard,
-      refresh: updateTraceRouteResults,
-      tags: ['server'],
     }, {
       id: 'security-txt',
       title: 'Security.Txt',

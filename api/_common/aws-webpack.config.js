@@ -27,7 +27,6 @@ module.exports = {
         'ssl': './api/ssl.js',
         'status': './api/status.js',
         'tech-stack': './api/tech-stack.js',
-        'trace-route': './api/trace-route.js',
         'txt-records': './api/txt-records.js',
         'whois': './api/whois.js',
     },

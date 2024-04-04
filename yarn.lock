@@ -17628,11 +17628,6 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-traceroute@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/traceroute/-/traceroute-1.0.0.tgz#4b08996e2a84ee5c5cd6e0eab15f97cd7a56a3db"
-  integrity sha512-g+Ydtg6nkHVGAX3z51IM7utkbAJHtpb53IYXLTwSvD1nyhx2M7bT3QDFc1rj2OSKhemAxYVyYQHKWLFqjcbHPQ==
-
 "traverse@>=0.3.0 <0.4":
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"

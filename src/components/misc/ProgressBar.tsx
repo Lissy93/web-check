@@ -197,7 +197,6 @@ const jobNames = [
   'hosts',
   'http-security',
   'social-tags',
-  'trace-route',
   'security-txt',
   'dns-server',
   'firewall',

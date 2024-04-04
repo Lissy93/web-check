@@ -13,7 +13,7 @@ FROM node:${NODE_VERSION}-${OS_VERSION} AS build
 # Install Chromium browser and Download and verify Google Chrome’s signing key
 RUN apk update && \
     apk add --no-cache gnupg wget && \
-    apk add --no-cache chromium traceroute python3 make g++ && \
+    apk add --no-cache chromium python3 make g++ && \
     rm -rf /var/cache/apk/*
 
 # Run the Chromium browser's version command and redirect its output to the /etc/chromium-version file
@@ -46,7 +46,7 @@ COPY package.json yarn.lock ./
 COPY --from=build /app .
 
 RUN apk update && \
-    apk add --no-cache chromium traceroute && \
+    apk add --no-cache chromium && \
     chmod 755 /usr/bin/chromium && \
     rm -rf /var/cache/apk/* /app/node_modules/.cache
 
