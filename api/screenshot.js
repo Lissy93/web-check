@@ -1,8 +1,4 @@
 const puppeteer = require('puppeteer-core');
-// Suppression de la ligne `const chromium = require('chrome-aws-lambda');` car nous configurons manuellement
-
-// Supposons que `middleware` est une fonction que vous avez définie ou importée depuis un autre fichier
-// Si `_common/middleware` n'est pas adapté à votre usage, assurez-vous que la fonction middleware est correctement implémentée
 const middleware = require('./_common/middleware');
 
 const handler = async (targetUrl) => {
@@ -23,19 +19,18 @@ const handler = async (targetUrl) => {
 
   let browser = null;
   try {
-      // Configuration spécifique pour Chromium sur Alpine Linux
       browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Adapté pour Alpine
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], 
       defaultViewport: { width: 1920, height: 1080 },
-      executablePath: '/usr/bin/chromium-browser', // Chemin d'exécution de Chromium sur Alpine
-      headless: true, // ou false si vous avez besoin du mode non headless
+      executablePath: '/usr/bin/chromium-browser', 
+      headless: true, 
       ignoreHTTPSErrors: true,
     });
 
     let page = await browser.newPage();
 
     await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-    page.setDefaultNavigationTimeout(8000); // Ajustez selon le besoin
+    page.setDefaultNavigationTimeout(8000); 
     await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
     await page.evaluate(() => {
