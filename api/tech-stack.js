@@ -1,5 +1,10 @@
 const Wappalyzer = require('wappalyzer');
 const middleware = require('./_common/middleware');
+const puppeteer = require('puppeteer-core');
+
+const browser = await puppeteer.launch({
+  executablePath: '/usr/bin/chromium-browser',
+});
 
 const handler = async (url) => {
   const options = {};
