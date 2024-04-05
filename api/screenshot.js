@@ -26,7 +26,7 @@ const handler = async (targetUrl) => {
       // Configuration spécifique pour Chromium sur Alpine Linux
       browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'], // Adapté pour Alpine
-      defaultViewport: { width: 800, height: 600 },
+      defaultViewport: { width: 1920, height: 1080 },
       executablePath: '/usr/bin/chromium-browser', // Chemin d'exécution de Chromium sur Alpine
       headless: true, // ou false si vous avez besoin du mode non headless
       ignoreHTTPSErrors: true,
