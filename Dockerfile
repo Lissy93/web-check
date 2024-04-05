@@ -15,9 +15,6 @@ RUN apk update && \
     apk add --no-cache chromium python3 make g++ && \
     rm -rf /var/cache/apk/*
 
-# Run the Chromium browser's version command and redirect its output to the /etc/chromium-version file
-RUN /usr/bin/chromium --no-sandbox --version > /etc/chromium-version
-
 # Set the working directory to /app
 WORKDIR /app
 
