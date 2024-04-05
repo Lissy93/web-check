@@ -46,15 +46,11 @@ COPY --from=build /app .
 
 RUN apk update && \
     apk add --no-cache chromium && \
-    chmod 755 /usr/bin/chromium && \
+    chmod 755 /usr/bin/chromium-browser && \
     rm -rf /var/cache/apk/* /app/node_modules/.cache
 
 # Exposed container port, the default is 3000, which can be modified through the environment variable PORT
 EXPOSE ${PORT:-3000}
 
-# Set the environment variable CHROME_PATH to specify the path to the Chromium binaries
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    CHROME_PATH=/usr/bin/chromium-browser
-    
 # Define the command executed when the container starts and start the server.js of the Node.js application
 CMD ["yarn", "serve"]

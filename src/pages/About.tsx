@@ -270,7 +270,6 @@ const About = (): JSX.Element => {
 
 {/*     
 **Configuration Settings**:
-- `CHROME_PATH` (e.g. `/usr/bin/chromium`) - The path the the Chromium executable
 - `PORT` (e.g. `3000`) - Port to serve the API, when running server.js
 - `DISABLE_GUI` (e.g. `false`) - Disable the GUI, and only serve the API
 - `API_TIMEOUT_LIMIT` (e.g. `10000`) - The timeout limit for API requests, in milliseconds
