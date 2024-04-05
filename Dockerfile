@@ -54,7 +54,7 @@ EXPOSE ${PORT:-3000}
 
 # Set the environment variable CHROME_PATH to specify the path to the Chromium binaries
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    CHROME_BIN=/usr/bin/chromium-browser
+    CHROME_PATH=/usr/bin/chromium-browser
     
 # Define the command executed when the container starts and start the server.js of the Node.js application
 CMD ["yarn", "serve"]
