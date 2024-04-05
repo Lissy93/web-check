@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer-core');
-const chromium = require('chrome-aws-lambda');
 const middleware = require('./_common/middleware');
 
 const handler = async (targetUrl) => {
@@ -21,18 +20,17 @@ const handler = async (targetUrl) => {
   let browser = null;
   try {
       browser = await puppeteer.launch({
-      args: [...chromium.args, '--no-sandbox'], // Add --no-sandbox flag
-      defaultViewport: { width: 800, height: 600 },
-      executablePath: process.env.CHROME_PATH || await chromium.executablePath,
-      headless: chromium.headless,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], 
+      defaultViewport: { width: 1920, height: 1080 },
+      executablePath: '/usr/bin/chromium-browser', 
+      headless: true, 
       ignoreHTTPSErrors: true,
-      ignoreDefaultArgs: ['--disable-extensions'],
     });
 
     let page = await browser.newPage();
 
     await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-    page.setDefaultNavigationTimeout(8000);
+    page.setDefaultNavigationTimeout(8000); 
     await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
     await page.evaluate(() => {

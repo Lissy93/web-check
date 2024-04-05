@@ -15,9 +15,6 @@ RUN apk update && \
     apk add --no-cache chromium python3 make g++ && \
     rm -rf /var/cache/apk/*
 
-# Run the Chromium browser's version command and redirect its output to the /etc/chromium-version file
-RUN /usr/bin/chromium --no-sandbox --version > /etc/chromium-version
-
 # Set the working directory to /app
 WORKDIR /app
 
@@ -46,14 +43,12 @@ COPY --from=build /app .
 
 RUN apk update && \
     apk add --no-cache chromium && \
-    chmod 755 /usr/bin/chromium && \
+    chmod 755 /usr/bin/chromium-browser && \
     rm -rf /var/cache/apk/* /app/node_modules/.cache
 
+ENV CHROMIUM_BIN=/usr/bin/chromium-browser
 # Exposed container port, the default is 3000, which can be modified through the environment variable PORT
 EXPOSE ${PORT:-3000}
-
-# Set the environment variable CHROME_PATH to specify the path to the Chromium binaries
-ENV CHROME_PATH='/usr/bin/chromium'
 
 # Define the command executed when the container starts and start the server.js of the Node.js application
 CMD ["yarn", "serve"]
