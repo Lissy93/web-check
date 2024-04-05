@@ -1,6 +1,5 @@
 const Wappalyzer = require('wappalyzer');
 const middleware = require('./_common/middleware');
-const puppeteer = require('puppeteer-core');
 
 const handler = async (url) => {
   const options = {};
