@@ -82,10 +82,6 @@
     "outDir": "./dist"
   },
   "devDependencies": {
-    "serverless-domain-manager": "^7.1.1",
-    "serverless-offline": "^12.0.4",
-    "serverless-webpack": "^5.13.0",
-    "webpack": "^5.88.2",
     "webpack-node-externals": "^3.0.0"
   }
 }
