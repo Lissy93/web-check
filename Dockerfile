@@ -46,6 +46,7 @@ RUN apk update && \
     chmod 755 /usr/bin/chromium-browser && \
     rm -rf /var/cache/apk/* /app/node_modules/.cache
 
+ENV CHROMIUM_BIN=/usr/bin/chromium-browser
 # Exposed container port, the default is 3000, which can be modified through the environment variable PORT
 EXPOSE ${PORT:-3000}
 
