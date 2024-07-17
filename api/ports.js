@@ -1,5 +1,5 @@
-const net = require('net');
-const middleware = require('./_common/middleware');
+import net from 'net';
+import middleware from './_common/middleware.js';
 
 // A list of commonly used ports.
 const PORTS = [
@@ -34,7 +34,7 @@ async function checkPort(port, domain) {
     });
 }
 
-const handler = async (url, event, context) => {
+const portsHandler = async (url, event, context) => {
   const domain = url.replace(/(^\w+:|^)\/\//, '');
   
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -72,7 +72,11 @@ const handler = async (url, event, context) => {
   if(timeoutReached){
     return errorResponse('The function timed out before completing.');
   }
-
+  
+  // Sort openPorts and failedPorts before returning
+  openPorts.sort((a, b) => a - b);
+  failedPorts.sort((a, b) => a - b);
+  
   return { openPorts, failedPorts };
 };
 
@@ -80,5 +84,5 @@ const errorResponse = (message, statusCode = 444) => {
   return { error: message };
 };
 
-module.exports = middleware(handler);
-module.exports.handler = middleware(handler);
+export const handler = middleware(portsHandler);
+export default handler;
