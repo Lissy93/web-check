@@ -208,10 +208,10 @@ const resources = [
   },
   {
     title: 'Mozilla Observatory',
-    link: 'https://observatory.mozilla.org/',
+    link: 'https://developer.mozilla.org/en-US/observatory',
     icon: 'https://i.ibb.co/hBWh9cj/logo-mozm-5e95c457fdd1.png',
     description: 'Assesses website security posture by analyzing various security headers and practices',
-    searchLink: 'https://observatory.mozilla.org/analyze/{URL}',
+    searchLink: 'https://developer.mozilla.org/en-US/observatory/analyze/{URL}',
   },
   {
     title: 'AbuseIPDB',
