@@ -1277,7 +1277,7 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
 
 ## License
 
-> _**[Lissy93/Web-Check](https://github.com/Lissy93/web-check)** is licensed under [MIT](https://github.com/Lissy93/web-check/blob/HEAD/LICENSE) © [Alicia Sykes](https://aliciasykes.com) 2023._<br>
+> _**[Lissy93/Web-Check](https://github.com/Lissy93/web-check)** is licensed under [MIT](https://github.com/Lissy93/web-check/blob/HEAD/LICENSE) © [Alicia Sykes](https://aliciasykes.com) 2024._<br>
 > <sup align="right">For information, see <a href="https://tldrlegal.com/license/mit-license">TLDR Legal > MIT</a></sup>
 
 <details>
@@ -1312,7 +1312,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 <!-- License + Copyright -->
 <p  align="center">
-  <i>© <a href="https://aliciasykes.com">Alicia Sykes</a> 2023</i><br>
+  <i>© <a href="https://aliciasykes.com">Alicia Sykes</a> 2024</i><br>
   <i>Licensed under <a href="https://gist.github.com/Lissy93/143d2ee01ccc5c052a17">MIT</a></i><br>
   <a href="https://github.com/lissy93"><img src="https://i.ibb.co/4KtpYxb/octocat-clean-mini.png" /></a><br>
   <sup>Thanks for visiting :)</sup>
