@@ -625,7 +625,7 @@ Reviewing security headers is important, as it offers insights into a site's def
 - [content-security-policy.com](https://content-security-policy.com/)
 - [resourcepolicy.fyi](https://resourcepolicy.fyi/)
 - [HTTP Security Headers](https://securityheaders.com/)
-- [Mozilla Observatory](https://observatory.mozilla.org/)
+- [Mozilla HTTP Observatory](https://developer.mozilla.org/en-US/observatory)
 - [CSP Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - [HSTS Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 - [X-Content-Type-Options Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)
