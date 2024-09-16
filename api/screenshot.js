@@ -20,9 +20,12 @@ const screenshotHandler = async (targetUrl) => {
 
   let browser = null;
   try {
+      const width = process.env.BROWSER_WIDTH ? parseInt(process.env.BROWSER_WIDTH, 10) : 800;
+      const height = process.env.BROWSER_HEIGHT ? parseInt(process.env.BROWSER_HEIGHT, 10) : 600;
+
       browser = await puppeteer.launch({
       args: [...chromium.args, '--no-sandbox'], // Add --no-sandbox flag
-      defaultViewport: { width: 800, height: 600 },
+      defaultViewport: { width, height },
       executablePath: process.env.CHROME_PATH || await chromium.executablePath,
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
@@ -32,7 +35,8 @@ const screenshotHandler = async (targetUrl) => {
     let page = await browser.newPage();
 
     await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
-    page.setDefaultNavigationTimeout(8000);
+    const browserTimeout = process.env.BROWSER_TIMEOUT ? parseInt(process.env.BROWSER_TIMEOUT, 10) : 8000;
+    page.setDefaultNavigationTimeout(browserTimeout);
     await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 
     await page.evaluate(() => {
