@@ -1,0 +1,1062 @@
+openapi: "3.0.0"
+info:
+  title: Website Analysis Service
+  version: 1.0.1
+paths:
+  /api/archives:
+    get:
+      summary: Analyze Wayback Machine archive data
+      description: Fetches and analyzes archived data from the Wayback Machine for a given URL.
+      tags:
+        - Archives
+      parameters:
+        - name: url
+          in: query
+          description: The URL to analyze using the Wayback Machine.
+          required: true
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Wayback Machine data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstScan:
+                    type: string
+                    format: date
+                    description: Date of the first scan
+                  lastScan:
+                    type: string
+                    format: date
+                    description: Date of the last scan
+                  totalScans:
+                    type: integer
+                    description: Total number of scans
+                  changeCount:
+                    type: integer
+                    description: Count of detected page changes
+                  averagePageSize:
+                    type: number
+                    description: Average size of pages in bytes
+                  scanFrequency:
+                    type: number
+                    description: Average frequency of scans in days
+                  scans:
+                    type: array
+                    items:
+                      type: object
+                    description: List of scans
+                  scanUrl:
+                    type: string
+                    format: uri
+                    description: URL analyzed
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /api/block-Lists:
+    get:
+      summary: Check if a domain is in blocklists
+      description: Validates the provided domain against known DNS blocklists.
+      tags:
+        - Security
+      parameters:
+        - name: url
+          in: query
+          description: The URL to check against DNS blocklists.
+          required: true
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Blocklist data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocklists:
+                    type: array
+                    items:
+                      type: string
+                    description: List of blocklists that include the domain
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /api/carbon:
+    get:
+      summary: Analyze website's carbon footprint
+      description: Calculates the environmental impact of a website by estimating its carbon footprint.
+      tags:
+        - Environment
+      parameters:
+        - name: url
+          in: query
+          description: The URL to analyze.
+          required: true
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Carbon data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adjustedBytes:
+                    type: number
+                    description: Adjusted size of the website in bytes
+                  energy:
+                    type: number
+                    description: Energy consumed in kWh
+                  co2:
+                    type: number
+                    description: CO2 emissions in grams
+                  scanUrl:
+                    type: string
+                    format: uri
+                    description: URL analyzed
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /api/cookies:
+    get:
+      summary: Inspect cookies from a URL
+      description: Fetches cookies from headers and client-side using Puppeteer for analysis.
+      tags:
+        - HTTP
+      parameters:
+        - name: url
+          in: query
+          description: The URL to fetch cookies from.
+          required: true
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Cookies retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headerCookies:
+                    type: array
+                    items:
+                      type: string
+                    description: Cookies retrieved from headers
+                  clientCookies:
+                    type: array
+                    items:
+                      type: object
+                    description: Cookies retrieved using Puppeteer
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /api/dns-server:
+    get:
+      summary: Fetch DNS records for a domain
+      description: Resolves DNS records such as A, AAAA, and others, for the provided domain.
+      tags:
+        - Networking
+      parameters:
+        - name: url
+          in: query
+          description: The domain to fetch DNS records for.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: DNS records resolved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                    description: Domain analyzed
+                  dns:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          description: IP address resolved
+                        hostname:
+                          type: string
+                          nullable: true
+                          description: Hostname associated with the IP
+                        dohDirectSupports:
+                          type: boolean
+                          description: Whether DoH (DNS over HTTPS) is directly supported
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /api/dns:
+    get:
+      summary: Get DNS records for a given URL.
+      description: Fetches various DNS records (A, AAAA, MX, TXT, NS, CNAME, SOA, SRV, PTR) for the provided URL.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to fetch DNS records for.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved DNS records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  A:
+                    type: array
+                    items:
+                      type: string
+                  AAAA:
+                    type: array
+                    items:
+                      type: string
+                  MX:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        exchange:
+                          type: string
+                        priority:
+                          type: integer
+                  TXT:
+                    type: array
+                    items:
+                      type: string
+                  NS:
+                    type: array
+                    items:
+                      type: string
+                  CNAME:
+                    type: array
+                    items:
+                      type: string
+                  SOA:
+                    type: object
+                  SRV:
+                    type: array
+                    items:
+                      type: object
+                  PTR:
+                    type: array
+                    items:
+                      type: string
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/dnssec:
+    get:
+      summary: Get DNSSEC records for a domain.
+      description: Fetches DNSSEC records (DNSKEY, DS, RRSIG) for the given domain.
+      parameters:
+        - name: domain
+          in: query
+          required: true
+          description: The domain to fetch DNSSEC records for.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved DNSSEC records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  DNSKEY:
+                    type: object
+                    properties:
+                      isFound:
+                        type: boolean
+                      answer:
+                        type: array
+                        items:
+                          type: string
+                  DS:
+                    type: object
+                    properties:
+                      isFound:
+                        type: boolean
+                      answer:
+                        type: array
+                        items:
+                          type: string
+                  RRSIG:
+                    type: object
+                    properties:
+                      isFound:
+                        type: boolean
+                      answer:
+                        type: array
+                        items:
+                          type: string
+        400:
+          description: Invalid domain provided.
+        500:
+          description: Internal server error.
+  /api/features:
+    get:
+      summary: Retrieve technologies used on a website.
+      description: Fetches website features and technologies using the BuiltWith API.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL of the website to analyze.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved website features.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  features:
+                    type: array
+                    items:
+                      type: string
+        400:
+          description: Invalid URL or API key missing.
+        500:
+          description: Internal server error.
+  /api/get-ip:
+    get:
+      summary: Resolve IP address for a URL.
+      description: Resolves the IP address for the given URL using DNS lookup.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to resolve the IP address for.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully resolved IP address.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ip:
+                    type: string
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+  /api/headers:
+    get:
+      summary: Retrieve response headers of a URL.
+      description: Fetches HTTP headers for the provided URL.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to fetch headers from.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved headers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/hsts:
+    get:
+      summary: Check HSTS compatibility of a website.
+      description: Determines whether a website meets HSTS preload requirements.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to check for HSTS compatibility.
+          schema:
+            type: string
+      responses:
+        200:
+          description: HSTS compatibility checked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  compatible:
+                    type: boolean
+                  hstsHeader:
+                    type: string
+                    nullable: true
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/https-security:
+    get:
+      summary: Analyze HTTPS security headers.
+      description: Retrieves security-related HTTP headers from the given URL.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to analyze security headers.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully analyzed HTTPS security headers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strictTransportPolicy:
+                    type: boolean
+                  xFrameOptions:
+                    type: boolean
+                  xContentTypeOptions:
+                    type: boolean
+                  xXSSProtection:
+                    type: boolean
+                  contentSecurityPolicy:
+                    type: boolean
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/legacy-rank:
+    get:
+      summary: Retrieve domain rank.
+      description: Checks the rank of a domain in the Umbrella top 1M list.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL of the domain to rank.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved domain rank.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                  rank:
+                    type: integer
+                    nullable: true
+                  isFound:
+                    type: boolean
+                  skipped:
+                    type: string
+                    nullable: true
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/linked-pages:
+    get:
+      summary: Analyze linked pages.
+      description: Retrieves and categorizes internal and external links from a webpage.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to analyze links.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully retrieved linked pages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  internal:
+                    type: array
+                    items:
+                      type: string
+                  external:
+                    type: array
+                    items:
+                      type: string
+                  skipped:
+                    type: string
+                    nullable: true
+        400:
+          description: Invalid URL provided.
+        500:
+          description: Internal server error.
+
+  /api/mail-config:
+    get:
+      summary: Analyze mail server configuration.
+      description: Retrieves mail-related DNS records (MX, SPF, DKIM, DMARC) and identifies mail service providers.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The domain to analyze mail configuration.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully analyzed mail server configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mxRecords:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        exchange:
+                          type: string
+                        priority:
+                          type: integer
+                  txtRecords:
+                    type: array
+                    items:
+                      type: string
+                  mailServices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        provider:
+                          type: string
+                        value:
+                          type: string
+                  skipped:
+                    type: string
+                    nullable: true
+        400:
+          description: Invalid domain provided.
+        500:
+          description: Internal server error.
+  /api/ports:
+    get:
+      summary: Scan open ports for a domain
+      parameters:
+        - name: url
+          in: query
+          description: The domain to scan for open ports
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Open ports and failed ports
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  openPorts:
+                    type: array
+                    items:
+                      type: integer
+                  failedPorts:
+                    type: array
+                    items:
+                      type: integer
+        500:
+          description: Server error
+  /api/quality:
+    get:
+      summary: Analyze page quality metrics using Google PageSpeed API
+      parameters:
+        - name: url
+          in: query
+          description: The URL to analyze
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Page quality metrics
+          content:
+            application/json:
+              schema:
+                type: object
+        500:
+          description: Server error
+  /api/redirects:
+    get:
+      summary: Analyze redirects for a URL
+      parameters:
+        - name: url
+          in: query
+          description: The URL to check for redirects
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: List of redirects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  redirects:
+                    type: array
+                    items:
+                      type: string
+        500:
+          description: Server error
+  /api/robots-txt:
+    get:
+      summary: Fetch and analyze robots.txt
+      parameters:
+        - name: url
+          in: query
+          description: The URL to fetch robots.txt from
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Parsed robots.txt
+          content:
+            application/json:
+              schema:
+                type: object
+        500:
+          description: Server error
+  /api/screenshot:
+    get:
+      summary: Capture a screenshot of a webpage
+      parameters:
+        - name: targetUrl
+          in: query
+          description: The URL of the website to capture a screenshot
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Screenshot captured successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  image:
+                    type: string
+                    format: byte
+        400:
+          description: Invalid URL format
+        500:
+          description: Server error
+          
+  /api/security-txt:
+    get:
+      summary: Fetch and check for a `security.txt` file on a domain
+      parameters:
+        - name: url
+          in: query
+          description: The URL of the website to check for a `security.txt` file
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: security.txt file found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isPresent:
+                    type: boolean
+                  foundIn:
+                    type: string
+                  content:
+                    type: string
+                  isPgpSigned:
+                    type: boolean
+                  fields:
+                    type: object
+        404:
+          description: No `security.txt` file found
+        500:
+          description: Server error
+          
+  /api/sitemap:
+    get:
+      summary: Retrieve the sitemap of a website
+      parameters:
+        - name: url
+          in: query
+          description: The URL of the website to fetch the sitemap for
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Sitemap retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sitemap:
+                    type: object
+        404:
+          description: Sitemap not found
+        500:
+          description: Server error
+
+  /api/social-tags:
+    get:
+      summary: Fetch social media meta tags from a webpage
+      parameters:
+        - name: url
+          in: query
+          description: The URL of the website to fetch social media tags from
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: Social media tags retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  keywords:
+                    type: string
+                  canonicalUrl:
+                    type: string
+                  ogTitle:
+                    type: string
+                  ogType:
+                    type: string
+                  ogImage:
+                    type: string
+                  ogUrl:
+                    type: string
+                  ogDescription:
+                    type: string
+                  ogSiteName:
+                    type: string
+                  twitterCard:
+                    type: string
+                  twitterSite:
+                    type: string
+                  twitterCreator:
+                    type: string
+                  twitterTitle:
+                    type: string
+                  twitterDescription:
+                    type: string
+                  twitterImage:
+                    type: string
+                  themeColor:
+                    type: string
+                  robots:
+                    type: string
+                  googlebot:
+                    type: string
+                  generator:
+                    type: string
+                  viewport:
+                    type: string
+                  author:
+                    type: string
+                  publisher:
+                    type: string
+                  favicon:
+                    type: string
+        500:
+          description: Failed to fetch data from the page
+
+  /api/ssl:
+    get:
+      summary: Retrieve SSL certificate information of a website
+      parameters:
+        - name: url
+          in: query
+          description: The URL of the website to fetch the SSL certificate information for
+          required: true
+          schema:
+            type: string
+            format: url
+      responses:
+        200:
+          description: SSL certificate retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subject:
+                    type: string
+                  issuer:
+                    type: string
+                  validFrom:
+                    type: string
+                    format: date-time
+                  validTo:
+                    type: string
+                    format: date-time
+                  serialNumber:
+                    type: string
+                  sha1Fingerprint:
+                    type: string
+        400:
+          description: Invalid URL format
+        500:
+          description: Server error
+  /api/status:
+    get:
+      summary: Get status of a website
+      parameters:
+        - name: url
+          in: query
+          description: The URL to check the status of
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Website status and performance data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isUp:
+                    type: boolean
+                  dnsLookupTime:
+                    type: number
+                    format: float
+                  responseTime:
+                    type: number
+                    format: float
+                  responseCode:
+                    type: integer
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/tech-stack:
+    get:
+      summary: Get technology stack of a website
+      parameters:
+        - name: url
+          in: query
+          description: The URL to analyze the tech stack of
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The technology stack of the website
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  technologies:
+                    type: array
+                    items:
+                      type: string
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/threats:
+    get:
+      summary: Check Google Safe Browsing result for a URL
+      parameters:
+        - name: url
+          in: query
+          description: The URL to check for safety
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Google Safe Browsing result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unsafe:
+                    type: boolean
+                  details:
+                    type: array
+                    items:
+                      type: object
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/tls:
+    get:
+      summary: Get TLS/SSL certificate details of a domain
+      parameters:
+        - name: url
+          in: query
+          description: The URL to fetch TLS certificate details from
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: TLS certificate details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  certificate:
+                    type: object
+                    additionalProperties: true
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/trace-route:
+    get:
+      summary: Perform a traceroute to a domain
+      parameters:
+        - name: url
+          in: query
+          description: The URL to perform traceroute on
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Traceroute results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  result:
+                    type: array
+                    items:
+                      type: object
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/txt-records:
+    get:
+      summary: Fetch TXT records for a domain
+      parameters:
+        - name: url
+          in: query
+          description: The URL to fetch TXT records for
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: TXT records of the domain
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: Invalid URL parameter
+        500:
+          description: Internal Server Error
+
+  /api/whois:
+    get:
+      summary: Perform a Whois lookup for a domain
+      parameters:
+        - name: domain
+          in: query
+          description: The domain to lookup
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Whois data for the domain
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        400:
+          description: Invalid domain parameter
+        500:
+          description: Internal Server Error
