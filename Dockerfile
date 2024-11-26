@@ -42,6 +42,9 @@ RUN yarn build --production
 # Final stage
 FROM node:${NODE_VERSION}-${DEBIAN_VERSION}  AS final
 
+# Set the environment variable HEADLESS to true
+ENV HEADLESS=true
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
