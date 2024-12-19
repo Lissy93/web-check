@@ -53,7 +53,6 @@ const securityTxtHandler = async (urlParam) => {
   for (let path of SECURITY_TXT_PATHS) {
     try {
       const result = await fetchSecurityTxt(url, path);
-      if (result && result.includes('<html')) return { isPresent: false };
       if (result) {
         return {
           isPresent: true,
