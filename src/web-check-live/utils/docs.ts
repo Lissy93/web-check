@@ -59,7 +59,7 @@ const docs: Doc[] = [
       { title: 'HTTP Cookie Docs (Mozilla)', link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies' },
       { title: 'What are Cookies (via Cloudflare Learning)', link: 'https://www.cloudflare.com/learning/privacy/what-are-cookies/' },
       { title: 'Testing for Cookie Attributes (OWASP)', link: 'https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes' },
-      { title: 'RFC-6265 - Coolies', link: 'https://tools.ietf.org/html/rfc6265' },
+      { title: 'RFC-6265 - Cookies', link: 'https://tools.ietf.org/html/rfc6265' },
     ],
     screenshot: 'https://i.ibb.co/TTQ6DtP/wc-cookies.png',
   },
@@ -254,8 +254,8 @@ const docs: Doc[] = [
     id: "dnssec",
     title: "DNS Security Extensions",
     description:
-      "Without DNSSEC, it's possible for MITM attackers to spoof records and lead users to phishing sites. This is because the DNS system includes no built-in methods to verify that the response to the request was not forged, or that any other part of the process wasn’t interrupted by an attacker. The DNS Security Extensions (DNSSEC) secures DNS lookups by signing your DNS records using public keys, so browsers can detect if the response has been tampered with. Another solution to this issue is DoH (DNS over HTTPS) and DoT (DNS over TLD).",
-    use: "DNSSEC information provides insight into an organization's level of cybersecurity maturity and potential vulnerabilities, particularly around DNS spoofing and cache poisoning. If no DNS secururity (DNSSEC, DoH, DoT, etc) is implemented, this may provide an entry point for an attacker.",
+      "Without DNSSEC, it's possible for MITM attackers to spoof records and lead users to phishing sites. This is because the DNS system includes no built-in methods to verify that the response to the request was not forged, or that any other part of the process wasn’t interrupted by an attacker. The DNS Security Extensions (DNSSEC) secures DNS lookups by signing your DNS records using public keys, so browsers can detect if the response has been tampered with. Another solution to this issue is DoH (DNS over HTTPS) and DoT (DNS over TLS).",
+    use: "DNSSEC information provides insight into an organization's level of cybersecurity maturity and potential vulnerabilities, particularly around DNS spoofing and cache poisoning. If no DNS security (DNSSEC, DoH, DoT, etc) is implemented, this may provide an entry point for an attacker.",
     resources: [
       "https://dnssec-analyzer.verisignlabs.com/",
       "https://www.cloudflare.com/dns/dnssec/how-dnssec-works/",
@@ -299,7 +299,7 @@ const docs: Doc[] = [
   {
     id: 'dns-server',
     title: 'DNS Server',
-    description: 'This check determines the DNS server(s) that the requested URL / IP resolves to. Also fires off a rudimentary check to see if the DNS server supports DoH, and weather it\'s vulnerable to DNS cache poisoning.',
+    description: 'This check determines the DNS server(s) that the requested URL / IP resolves to. Also fires off a rudimentary check to see if the DNS server supports DoH, and whether it\'s vulnerable to DNS cache poisoning.',
     use: '',
     resources: [],
     screenshot: 'https://i.ibb.co/tKpL8F9/Screenshot-from-2023-08-12-15-43-12.png',
@@ -544,7 +544,7 @@ to use, copy, modify, merge, publish, distribute, sub-license, and/or sell
 copies of the Software, and to permit persons to whom the Software is furnished 
 to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included install 
+The above copyright notice and this permission notice shall be included in all 
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
