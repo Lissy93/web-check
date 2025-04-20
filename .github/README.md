@@ -1015,6 +1015,13 @@ Credit to the following users for contributing to Web-Check
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/CrazyWolf13">
+                    <img src="https://avatars.githubusercontent.com/u/96661824?v=4" width="80;" alt="CrazyWolf13"/>
+                    <br />
+                    <sub><b>Tobias</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/PhiRequiem">
                     <img src="https://avatars.githubusercontent.com/u/1323576?v=4" width="80;" alt="PhiRequiem"/>
                     <br />
@@ -1028,6 +1035,8 @@ Credit to the following users for contributing to Web-Check
                     <sub><b>Nikolaos G. Ntaiko</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/Myzel394">
                     <img src="https://avatars.githubusercontent.com/u/50424412?v=4" width="80;" alt="Myzel394"/>
@@ -1035,8 +1044,6 @@ Credit to the following users for contributing to Web-Check
                     <sub><b>Myzel394</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/murrple-1">
                     <img src="https://avatars.githubusercontent.com/u/5559656?v=4" width="80;" alt="murrple-1"/>
@@ -1072,6 +1079,8 @@ Credit to the following users for contributing to Web-Check
                     <sub><b>Gertje823</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/epreston">
                     <img src="https://avatars.githubusercontent.com/u/347224?v=4" width="80;" alt="epreston"/>
@@ -1079,8 +1088,6 @@ Credit to the following users for contributing to Web-Check
                     <sub><b>Ed Preston</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/dimitri-kandassamy">
                     <img src="https://avatars.githubusercontent.com/u/21193806?v=4" width="80;" alt="dimitri-kandassamy"/>
@@ -1110,9 +1117,16 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
 		<tr>
             <td align="center">
                 <a href="https://github.com/vincentkoc">
-                    <img src="https://avatars.githubusercontent.com/u/25068?v=4" width="80;" alt="vincentkoc"/>
+                    <img src="https://avatars.githubusercontent.com/u/25068?u=fbd5b2d51142daa4bdbc21e21953a3b8b8188a4a&v=4" width="80;" alt="vincentkoc"/>
                     <br />
                     <sub><b>Vincent Koc</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/BrianCurliss">
+                    <img src="https://avatars.githubusercontent.com/u/1222949?v=4" width="80;" alt="BrianCurliss"/>
+                    <br />
+                    <sub><b>Brian Curliss</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -1143,6 +1157,8 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
                     <sub><b>Ulises Gascón</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/digitalarche">
                     <img src="https://avatars.githubusercontent.com/u/6546135?u=564756d7f44ab2206819eb3148f6d822673f5066&v=4" width="80;" alt="digitalarche"/>
@@ -1150,8 +1166,6 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
                     <sub><b>Digital Archeology</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/InDieTasten">
                     <img src="https://avatars.githubusercontent.com/u/7047377?u=8d8f8017628b38bc46dcbf3620e194b01d3fb2d1&v=4" width="80;" alt="InDieTasten"/>
@@ -1171,13 +1185,6 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
                     <img src="https://avatars.githubusercontent.com/u/7346620?u=2a0f9284f3e12ac1cc15288c254d1ec68a5081e8&v=4" width="80;" alt="bmcgonag"/>
                     <br />
                     <sub><b>Brian McGonagill</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/arcestia">
-                    <img src="https://avatars.githubusercontent.com/u/7936962?v=4" width="80;" alt="arcestia"/>
-                    <br />
-                    <sub><b>Laurensius Jeffrey</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -1252,13 +1259,6 @@ Huge thanks to these wonderful people, who sponsor me on GitHub, their support h
                     <img src="https://avatars.githubusercontent.com/u/163282900?u=5f2667f7fe5d284ac7a2da6b0800ea8970b0fcbf&v=4" width="80;" alt="hudsonrock-partnerships"/>
                     <br />
                     <sub><b>hudsonrock-partnerships</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/CarterPerez-dev">
-                    <img src="https://avatars.githubusercontent.com/u/188120068?v=4" width="80;" alt="CarterPerez-dev"/>
-                    <br />
-                    <sub><b>Carter Perez</b></sub>
                 </a>
             </td>
 		</tr>
