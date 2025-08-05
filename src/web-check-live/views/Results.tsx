@@ -151,6 +151,16 @@ const FilterButtons = styled.div`
   }
 `;
 
+const isSafeUrl = (url: string): boolean => {
+  try {
+    const parsed = new URL(url, window.location.origin);
+    // Only allow http and https protocols
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const Results = (props: { address?: string } ): JSX.Element => {
   const startTime = new Date().getTime();
 
@@ -871,7 +881,11 @@ const Results = (props: { address?: string } ): JSX.Element => {
       <Nav>
       { address && 
         <Heading color={colors.textColor} size="medium">
-          { addressType === 'url' && <a target="_blank" rel="noreferrer" href={address}><img width="32px" src={`https://icon.horse/icon/${makeSiteName(address)}`} alt="" /></a> }
+          { addressType === 'url' && isSafeUrl(address) && (
+            <a target="_blank" rel="noreferrer" href={address}>
+              <img width="32px" src={`https://icon.horse/icon/${makeSiteName(address)}`} alt="" />
+            </a>
+          )}
           {makeSiteName(address)}
         </Heading>
         }
