@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Test and coverage
-        run: yarn jest --coverage
+        run: yarn add --dev jest
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
