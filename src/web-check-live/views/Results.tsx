@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { ToastContainer } from 'react-toastify';
 import Masonry from 'react-masonry-css'
-
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import colors from 'web-check-live/styles/colors';
 import Heading from 'web-check-live/components/Form/Heading';
 import Modal from 'web-check-live/components/Form/Modal';
@@ -165,6 +165,7 @@ const Results = (props: { address?: string } ): JSX.Element => {
   const startTime = new Date().getTime();
 
   const address = props.address || useParams().urlToScan || '';
+  const sanitizedAddress = sanitizeUrl(address);
 
   const [ addressType, setAddressType ] = useState<AddressType>('empt');
 
@@ -882,8 +883,8 @@ const Results = (props: { address?: string } ): JSX.Element => {
       { address && 
         <Heading color={colors.textColor} size="medium">
           { addressType === 'url' && isSafeUrl(address) && (
-            <a target="_blank" rel="noreferrer" href={address}>
-              <img width="32px" src={`https://icon.horse/icon/${makeSiteName(address)}`} alt="" />
+            <a target="_blank" rel="noreferrer" href={sanitizedAddress}>
+              <img width="32px" src={`https://icon.horse/icon/${makeSiteName(sanitizedAddress)}`} alt="" />
             </a>
           )}
           {makeSiteName(address)}
