@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { ToastContainer } from 'react-toastify';
 import Masonry from 'react-masonry-css'
-
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import colors from 'web-check-live/styles/colors';
 import Heading from 'web-check-live/components/Form/Heading';
 import Modal from 'web-check-live/components/Form/Modal';
@@ -151,10 +151,21 @@ const FilterButtons = styled.div`
   }
 `;
 
+const isSafeUrl = (url: string): boolean => {
+  try {
+    const parsed = new URL(url, window.location.origin);
+    // Only allow http and https protocols
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const Results = (props: { address?: string } ): JSX.Element => {
   const startTime = new Date().getTime();
 
   const address = props.address || useParams().urlToScan || '';
+  const sanitizedAddress = sanitizeUrl(address);
 
   const [ addressType, setAddressType ] = useState<AddressType>('empt');
 
@@ -871,7 +882,11 @@ const Results = (props: { address?: string } ): JSX.Element => {
       <Nav>
       { address && 
         <Heading color={colors.textColor} size="medium">
-          { addressType === 'url' && <a target="_blank" rel="noreferrer" href={address}><img width="32px" src={`https://icon.horse/icon/${makeSiteName(address)}`} alt="" /></a> }
+          { addressType === 'url' && isSafeUrl(address) && (
+            <a target="_blank" rel="noreferrer" href={sanitizedAddress}>
+              <img width="32px" src={`https://icon.horse/icon/${makeSiteName(sanitizedAddress)}`} alt="" />
+            </a>
+          )}
           {makeSiteName(address)}
         </Heading>
         }
