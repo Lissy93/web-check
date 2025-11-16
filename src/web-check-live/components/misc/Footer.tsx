@@ -53,7 +53,7 @@ const Footer = (props: { isFixed?: boolean }): JSX.Element => {
     <span>
       <Link to="/about">Web-Check</Link> is
       licensed under <ALink href={licenseUrl}>MIT</ALink> -
-      © <ALink href={authorUrl}>Alicia Sykes</ALink> 2023
+      © <ALink href={authorUrl}>Alicia Sykes</ALink> 2024
     </span>
   </StyledFooter>
   );
