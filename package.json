@@ -36,6 +36,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
+    "form-data": "4.0.4",
     "framer-motion": "^11.2.6",
     "got": "^14.2.1",
     "pm2": "^5.3.1",
