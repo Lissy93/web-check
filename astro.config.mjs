@@ -35,7 +35,13 @@ const base = unwrapEnvVar('BASE_URL', '/');
 const isBossServer = unwrapEnvVar('BOSS_SERVER', false);
 
 // Initialize Astro integrations
-const integrations = [svelte(), react(), partytown(), sitemap()];
+// Only include sitemap for boss-mode (production site), not for self-hosted instances
+const integrations = [
+  svelte(), 
+  react(), 
+  partytown(),
+  ...(isBossServer ? [sitemap()] : [])
+];
 
 // Set the appropriate adapter, based on the deploy target
 function getAdapter(target) {
