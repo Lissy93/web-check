@@ -54,6 +54,7 @@
     "typescript": "^5.4.5",
     "unzipper": "^0.11.5",
     "url-parse": "^1.5.10",
+    "uuid": "^9.0.1",
     "wappalyzer": "^6.10.65",
     "xml2js": "^0.6.2"
   },
