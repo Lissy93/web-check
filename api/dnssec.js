@@ -37,6 +37,10 @@ const dnsSecHandler = async (domain) => {
           });
         });
 
+        req.on('error', error => {
+          reject(error);
+        });
+
         req.end();
       });
 
