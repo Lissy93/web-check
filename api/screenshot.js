@@ -92,14 +92,57 @@ const screenshotHandler = async (targetUrl) => {
     console.log('[SCREENSHOT] Direct Chromium method disabled for SSRF safety');
   }
   
+  const chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
+
+  try {
+    await fs.access(chromePath);
+  } catch (error) {
+    console.error(`[SCREENSHOT] Chromium path not accessible: ${chromePath}`);
+    throw new Error(`Chromium binary not accessible at ${chromePath}`);
+  }
+
+  try {
+    const versionInfo = await new Promise((resolve, reject) => {
+      execFile(chromePath, ['--headless', '--no-sandbox', '--disable-gpu', '--version'], (error, stdout, stderr) => {
+        if (error) {
+          reject(new Error(stderr || error.message));
+          return;
+        }
+        resolve(stdout.trim());
+      });
+    });
+    console.log(`[SCREENSHOT] Chromium version: ${versionInfo}`);
+  } catch (error) {
+    console.error(`[SCREENSHOT] Chromium launch check failed: ${error.message}`);
+    throw new Error(`Chromium launch check failed: ${error.message}`);
+  }
+
   // fall back puppeteer 
   let browser = null;
   try {
     console.log(`[SCREENSHOT] Launching puppeteer browser`);
+    const useLambdaArgs = !!(process.env.AWS_EXECUTION_ENV || process.env.AWS_LAMBDA_FUNCTION_NAME);
+    const launchArgs = useLambdaArgs
+      ? [
+        ...chromium.args,
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--no-zygote',
+      ]
+      : [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-zygote',
+        '--use-gl=swiftshader',
+        '--disable-features=UseDBus',
+      ];
+
     browser = await puppeteer.launch({
-      args: [...chromium.args, '--no-sandbox'], // Add --no-sandbox flag
+      args: launchArgs,
       defaultViewport: { width: 800, height: 600 },
-      executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
+      executablePath: chromePath,
       headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ['--disable-extensions'],

@@ -4,6 +4,8 @@ import http from 'http';
 import https from 'https';
 import net from 'net';
 
+
+
 const DEFAULT_METADATA_HOSTS = [
   'metadata',
   'metadata.google.internal',
@@ -200,12 +202,49 @@ const extractHostname = (input, options) => {
   return host;
 };
 
-const assertSafeHostSync = (hostname) => {
+const parseRequestTarget = (input, options) => {
+  if (input instanceof URL) {
+    return { hostname: input.hostname, pathname: input.pathname, port: input.port || '' };
+  }
+
+  if (typeof input === 'string') {
+    try {
+      const parsed = new URL(input);
+      return { hostname: parsed.hostname, pathname: parsed.pathname, port: parsed.port || '' };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  const fromOptions = options || input || {};
+  const hostname = fromOptions.hostname || fromOptions.host || null;
+  const pathname = fromOptions.path || '/';
+  const port = fromOptions.port ? String(fromOptions.port) : '';
+  return hostname ? { hostname, pathname, port } : null;
+};
+
+const isDevtoolsRequest = (input, options) => {
+  const target = parseRequestTarget(input, options);
+  if (!target) return false;
+
+  const host = target.hostname;
+  if (!host || !(host === '127.0.0.1' || host === '::1' || host === 'localhost')) {
+    return false;
+  }
+
+  const path = target.pathname || '/';
+  return path.startsWith('/json') || path.startsWith('/devtools');
+};
+
+const assertSafeHostSync = (hostname, input, options) => {
   if (!hostname) return;
   if (isDisallowedHostname(hostname)) {
     throw new Error('URL hostname is blocked');
   }
   if (net.isIP(hostname) && isPrivateIp(hostname)) {
+    if (isDevtoolsRequest(input, options)) {
+      return;
+    }
     throw new Error('URL resolves to a private or metadata address');
   }
 };
@@ -227,7 +266,7 @@ export const installSsrfGuards = () => {
 
   const wrapRequest = (original) => (...args) => {
     const hostname = extractHostname(args[0], args[1]);
-    assertSafeHostSync(hostname);
+    assertSafeHostSync(hostname, args[0], args[1]);
     return original(...args);
   };
 
