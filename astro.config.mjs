@@ -19,6 +19,8 @@ const unwrapEnvVar = (varName, fallbackValue) => {
   return classicEnvVar || viteEnvVar || fallbackValue;
 }
 
+const toBoolean = (val) => (val ? ['true', '1', 'yes', 'on'].includes(String(val).toLowerCase().trim()) : false);
+
 // Determine the deploy target (vercel, netlify, cloudflare, node)
 const deployTarget = unwrapEnvVar('PLATFORM', 'node').toLowerCase();
 
@@ -32,7 +34,7 @@ const site = unwrapEnvVar('SITE_URL', 'https://web-check.xyz');
 const base = unwrapEnvVar('BASE_URL', '/');
 
 // Should run the app in boss-mode (requires extra configuration)
-const isBossServer = unwrapEnvVar('BOSS_SERVER', false);
+const isBossServer = toBoolean(unwrapEnvVar('BOSS_SERVER', false));
 
 // Initialize Astro integrations
 // Only include sitemap for boss-mode (production site), not for self-hosted instances
