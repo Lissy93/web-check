@@ -56,6 +56,8 @@ const useMotherOfAllHooks = <ResultType = any>(params: UseIpAddressProps<ResultT
         const errorMessage = `${res.errorType}\n${res.errorMessage}\n\n`
         + `This sometimes occurs on Netlify if using the free plan. You may need to upgrade to use lambda functions`;
         updateLoadingJobs(jobId, 'error', errorMessage, reset);
+      } else if (res.notApplicable) { // Resource doesn't exist on target, but job ran successfully
+        updateLoadingJobs(jobId, 'N/A', res.notApplicable, reset);
       } else if (res.skipped) { // Response returned a skipped message
         updateLoadingJobs(jobId, 'skipped', res.skipped, reset);
       } else { // Yay, everything went to plan :)

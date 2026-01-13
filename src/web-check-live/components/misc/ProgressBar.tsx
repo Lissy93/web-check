@@ -3,6 +3,7 @@ import colors from 'web-check-live/styles/colors';
 import Card from 'web-check-live/components/Form/Card';
 import Heading from 'web-check-live/components/Form/Heading';
 import { useState, useEffect, type ReactNode } from 'react';
+import StatusIconLegend from 'web-check-live/components/misc/StatusIconLegend';
 
 
 const LoadCard = styled(Card)`
@@ -173,7 +174,7 @@ pre {
 }
 `;
 
-export type LoadingState = 'success' | 'loading' | 'skipped' | 'error' | 'timed-out';
+export type LoadingState = 'success' | 'loading' | 'skipped' | 'error' | 'timed-out' | 'N/A';
 
 export interface LoadingJob {
   name: string,
@@ -235,6 +236,8 @@ const getStatusEmoji = (state: LoadingState): string => {
   switch (state) {
     case 'success':
       return '✅';
+    case 'N/A':
+      return '🔘';
     case 'loading':
       return '🔄';
     case 'error':
@@ -250,12 +253,22 @@ const getStatusEmoji = (state: LoadingState): string => {
 
 const JobListItem: React.FC<JobListItemProps> = ({ job, showJobDocs, showErrorModal, barColors }) => {
   const { name, state, timeTaken, retry, error } = job;
-  const actionButton = retry && state !== 'success' && state !== 'loading' ? 
+  
+  // Don't show retry button for success and loading states
+  const showRetry = retry && !['success', 'loading'].includes(state);
+  const actionButton = showRetry ? 
     <FailedJobActionButton onClick={retry}>↻ Retry</FailedJobActionButton> : null;
     
-  const showModalButton = error && ['error', 'timed-out', 'skipped'].includes(state) &&
-    <FailedJobActionButton onClick={() => showErrorModal(name, state, timeTaken, error, state === 'skipped')}> 
-      {state === 'timed-out' ? '■ Show Timeout Reason' : '■ Show Error'} 
+  // Determine info button text based on state
+  const getInfoButtonText = () => {
+    if (state === 'skipped' || state === 'N/A') return '■ Show Info';
+    if (state === 'timed-out') return '■ Show Timeout Reason';
+    return '■ Show Error';
+  };
+  
+  const showModalButton = error && ['error', 'timed-out', 'skipped', 'N/A'].includes(state) &&
+    <FailedJobActionButton onClick={() => showErrorModal(name, state, timeTaken, error, ['skipped', 'N/A'].includes(state))}> 
+      {getInfoButtonText()}
     </FailedJobActionButton>;
 
   return (
@@ -284,6 +297,7 @@ export const calculateLoadingStatePercentages = (loadingJobs: LoadingJob[]): Rec
   // Initialize count object
   const stateCount: Record<LoadingState, number> = {
     'success': 0,
+    'N/A': 0,
     'loading': 0,
     'timed-out': 0,
     'error': 0,
@@ -298,6 +312,7 @@ export const calculateLoadingStatePercentages = (loadingJobs: LoadingJob[]): Rec
   // Convert counts to percentages
   const statePercentage: Record<LoadingState, number> = {
     'success': (stateCount['success'] / totalJobs) * 100,
+    'N/A': (stateCount['N/A'] / totalJobs) * 100,
     'loading': (stateCount['loading'] / totalJobs) * 100,
     'timed-out': (stateCount['timed-out'] / totalJobs) * 100,
     'error': (stateCount['error'] / totalJobs) * 100,
@@ -345,11 +360,13 @@ const SummaryText = (props: { state: LoadingJob[], count: number }): JSX.Element
   let loadingTasksCount = props.state.filter((val: LoadingJob) => val.state === 'loading').length;
   let skippedTasksCount = props.state.filter((val: LoadingJob) => val.state === 'skipped').length;
   let successTasksCount = props.state.filter((val: LoadingJob) => val.state === 'success').length;
+  let notApplicableCount = props.state.filter((val: LoadingJob) => val.state === 'N/A').length;
 
   const jobz = (jobCount: number) => `${jobCount} ${jobCount === 1 ? 'job' : 'jobs'}`;
 
   const skippedInfo = skippedTasksCount > 0 ? (<span className="skipped">{jobz(skippedTasksCount)} skipped </span>) : null;
   const successInfo = successTasksCount > 0 ? (<span className="success">{jobz(successTasksCount)} successful </span>) : null;
+  const naInfo = notApplicableCount > 0 ? (<span style={{color: colors.neutral}}>{jobz(notApplicableCount)} N/A </span>) : null;
   const failedInfo = failedTasksCount > 0 ? (<span className="error">{jobz(failedTasksCount)} failed </span>) : null;
 
   if (loadingTasksCount > 0) {
@@ -364,7 +381,8 @@ const SummaryText = (props: { state: LoadingJob[], count: number }): JSX.Element
   if (failedTasksCount === 0) {
     return (
       <SummaryContainer className="success-info">
-        <b>{successTasksCount} Jobs Completed Successfully</b>
+        <b>{successTasksCount + notApplicableCount} Jobs Completed</b>
+        {naInfo}
         {skippedInfo}
       </SummaryContainer>
     );
@@ -373,6 +391,7 @@ const SummaryText = (props: { state: LoadingJob[], count: number }): JSX.Element
   return (
     <SummaryContainer className="error-info">
       {successInfo}
+      {naInfo}
       {skippedInfo}
       {failedInfo}
     </SummaryContainer>
@@ -398,6 +417,7 @@ const ProgressLoader = (props: { loadStatus: LoadingJob[], showModal: (err: Reac
 
   const barColors: Record<LoadingState | string, [string, string]> = {
     'success': isDone ? makeBarColor(colors.primary) : makeBarColor(colors.success),
+    'N/A': makeBarColor(colors.neutral),
     'loading': makeBarColor(colors.info),
     'error': makeBarColor(colors.danger),
     'timed-out': makeBarColor(colors.warning),
@@ -449,6 +469,7 @@ const ProgressLoader = (props: { loadStatus: LoadingJob[], showModal: (err: Reac
           <JobListItem key={job.name} job={job} showJobDocs={props.showJobDocs} showErrorModal={showErrorModal} barColors={barColors} />
         ))}
       </ul>
+      <StatusIconLegend />
       { loadStatus.filter((val: LoadingJob) => val.state === 'error').length > 0 &&
         <p className="error">
           <b>Check the browser console for logs and more info</b><br />

@@ -2,7 +2,16 @@ import Wappalyzer from 'wappalyzer';
 import middleware from './_common/middleware.js';
 
 const techStackHandler = async (url) => {
-  const options = {};
+  const options = {
+    browsers: ['chromium'],
+    puppeteerArgs: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--single-process',
+    ],
+    executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
+  };
 
   const wappalyzer = new Wappalyzer(options);
 

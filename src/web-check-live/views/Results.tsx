@@ -302,7 +302,10 @@ const Results = (props: { address?: string } ): JSX.Element => {
     addressInfo: { address, addressType, expectedAddressTypes: urlTypeOnly },
     fetchRequest: () => fetch(`${api}/quality?url=${address}`)
       .then(res => parseJson(res))
-      .then(res => res?.lighthouseResult || { error: res.error || 'No Data' }),
+      .then(res => {
+        if (res?.skipped) return res;
+        return res?.lighthouseResult || { error: res.error || 'No Data' };
+      }),
   });
 
   // Get the technologies used to build site, using Wappalyzer
@@ -552,6 +555,7 @@ const Results = (props: { address?: string } ): JSX.Element => {
     fetchRequest: () => fetch(`${api}/features?url=${address}`)
     .then(res => parseJson(res))
     .then(res => {
+      if (res?.skipped) return res;
       if (res.Errors && res.Errors.length > 0) {
         return { error: `No data returned, because ${res.Errors[0].Message || 'API lookup failed'}` };
       }

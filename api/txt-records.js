@@ -23,6 +23,8 @@ const txtRecordHandler = async (url, event, context) => {
   } catch (error) {
     if (error.code === 'ERR_INVALID_URL') {
       throw new Error(`Invalid URL ${error}`);
+    } else if (error.code === 'ENODATA' || error.code === 'ENOTFOUND') {
+      return { notApplicable: 'No TXT records configured for this domain' };
     } else {
       throw error;
     }
