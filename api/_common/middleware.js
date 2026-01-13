@@ -1,3 +1,5 @@
+import { assertSafeUrl, installSsrfGuards } from './ssrf.js';
+
 const normalizeUrl = (url) => {
   return url.startsWith('http') ? url : `https://${url}`;
 };
@@ -43,6 +45,7 @@ const disabledErrorMsg = 'Error - WebCheck Temporarily Disabled.\n\n'
 
 // A middleware function used by all API routes on all platforms
 const commonMiddleware = (handler) => {
+  installSsrfGuards();
 
   // Create a timeout promise, to throw an error if a request takes too long
   const createTimeoutPromise = (timeoutMs) => {
@@ -67,7 +70,13 @@ const commonMiddleware = (handler) => {
       return response.status(500).json({ error: 'No URL specified' });
     }
 
-    const url = normalizeUrl(rawUrl);
+    let url = normalizeUrl(rawUrl);
+
+    try {
+      url = await assertSafeUrl(url);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
 
     try {
       // Race the handler against the timeout
@@ -116,7 +125,18 @@ const commonMiddleware = (handler) => {
       return;
     }
 
-    const url = normalizeUrl(rawUrl);
+    let url = normalizeUrl(rawUrl);
+
+    try {
+      url = await assertSafeUrl(url);
+    } catch (error) {
+      callback(null, {
+        statusCode: 400,
+        body: JSON.stringify({ error: error.message }),
+        headers,
+      });
+      return;
+    }
 
     try {
       // Race the handler against the timeout
