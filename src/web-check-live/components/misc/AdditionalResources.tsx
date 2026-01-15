@@ -253,6 +253,12 @@ const resources = [
     icon: 'https://i.ibb.co/6nLw2MC/anyrun-icon.png',
     description: 'An interactive malware and web sandbox',
   },
+  {
+    title: 'DNS.fish',
+    link: 'https://dns.fish/',
+    icon: 'https://i.ibb.co/bdgzRGw/favicon-31-1.png',
+    description: 'An online dns lookup tool with API support',
+  },
 ];
 
 const makeLink = (resource: any, scanUrl: string | undefined): string => {
