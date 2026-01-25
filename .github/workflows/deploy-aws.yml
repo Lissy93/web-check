@@ -35,7 +35,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Create GitHub deployment for API
-      uses: chrnorm/deployment-action@releases/v2
+      uses: chrnorm/deployment-action@v2
       id: deployment_api
       with:
         token: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
@@ -97,7 +97,7 @@ jobs:
         yarn build
     
     - name: Setup AWS
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v5
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
