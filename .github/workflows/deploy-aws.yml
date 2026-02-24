@@ -35,7 +35,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Create GitHub deployment for API
-      uses: chrnorm/deployment-action@v2
+      uses: chrnorm/deployment-action@releases/v2
       id: deployment_api
       with:
         token: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
