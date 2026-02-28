@@ -8,7 +8,7 @@ const sslHandler = async (urlString) => {
       host: parsedUrl.hostname,
       port: parsedUrl.port || 443,
       servername: parsedUrl.hostname,
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
     };
 
     return new Promise((resolve, reject) => {

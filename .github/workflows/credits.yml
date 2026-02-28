@@ -1,5 +1,7 @@
 # Inserts list of community members into ./README.md
 name: 💓 Inserts Contributors & Sponsors
+permissions:
+  contents: write
 on:
   workflow_dispatch: # Manual dispatch
   schedule:
