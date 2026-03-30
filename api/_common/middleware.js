@@ -1,5 +1,115 @@
-const normalizeUrl = (url) => {
-  return url.startsWith('http') ? url : `https://${url}`;
+const MAX_URL_LENGTH = 2048;
+const ALLOW_PRIVATE_TARGETS = process.env.API_ALLOW_PRIVATE_TARGETS === 'true';
+
+const createClientError = (message) => {
+  const error = new Error(message);
+  error.statusCode = 400;
+  return error;
+};
+
+const isIpv4Address = (hostname) => {
+  const octets = hostname.split('.');
+  if (octets.length !== 4) {
+    return false;
+  }
+  return octets.every((octet) => {
+    if (!/^\d+$/.test(octet)) {
+      return false;
+    }
+    const value = Number(octet);
+    return value >= 0 && value <= 255;
+  });
+};
+
+const isPrivateIpv4 = (hostname) => {
+  if (!isIpv4Address(hostname)) {
+    return false;
+  }
+  const [a, b] = hostname.split('.').map(Number);
+  return (
+    a === 10 ||
+    a === 127 ||
+    a === 0 ||
+    (a === 100 && b >= 64 && b <= 127) ||
+    (a === 169 && b === 254) ||
+    (a === 172 && b >= 16 && b <= 31) ||
+    (a === 192 && b === 168) ||
+    (a === 198 && (b === 18 || b === 19)) ||
+    a >= 224
+  );
+};
+
+const isPrivateIpv6 = (hostname) => {
+  const host = hostname.toLowerCase();
+  return (
+    host === '::1' ||
+    host.startsWith('fc') ||
+    host.startsWith('fd') ||
+    host.startsWith('fe80:') ||
+    host.startsWith('::ffff:127.') ||
+    host.startsWith('::ffff:10.') ||
+    host.startsWith('::ffff:192.168.') ||
+    /^::ffff:172\.(1[6-9]|2\d|3[01])\./.test(host)
+  );
+};
+
+const isUnsafeTargetHost = (hostname) => {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  if (host === 'localhost' || host.endsWith('.localhost')) {
+    return true;
+  }
+  return isPrivateIpv4(host) || isPrivateIpv6(host);
+};
+
+const normalizeUrl = (rawUrl) => {
+  if (typeof rawUrl !== 'string') {
+    throw createClientError('Invalid URL: URL must be a string');
+  }
+
+  const trimmedUrl = rawUrl.trim();
+  if (!trimmedUrl) {
+    throw createClientError('Invalid URL: URL cannot be empty');
+  }
+
+  if (trimmedUrl.length > MAX_URL_LENGTH) {
+    throw createClientError(`Invalid URL: URL exceeds ${MAX_URL_LENGTH} characters`);
+  }
+
+  if(/[\u0000-\u001F\u007F]/.test(trimmedUrl)) {
+    throw createClientError('Invalid URL: URL contains control characters');
+  }
+
+  const withProtocol = /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(trimmedUrl)
+    ? trimmedUrl
+    : `https://${trimmedUrl}`;
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(withProtocol);
+  } catch {
+    throw createClientError('Invalid URL: Could not parse target URL');
+  }
+
+  if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+    throw createClientError('Invalid URL: Only HTTP and HTTPS protocols are supported');
+  }
+
+  if (parsedUrl.username || parsedUrl.password) {
+    throw createClientError('Invalid URL: Credentials in URL are not allowed');
+  }
+
+  if (!parsedUrl.hostname) {
+    throw createClientError('Invalid URL: Missing hostname');
+  }
+
+  if (!ALLOW_PRIVATE_TARGETS && isUnsafeTargetHost(parsedUrl.hostname)) {
+    throw createClientError(
+      'Target host is not allowed: local and private network addresses are blocked'
+    );
+  }
+
+  parsedUrl.hash = '';
+  return parsedUrl.toString();
 };
 
 // If present, set a shorter timeout for API requests
@@ -57,7 +167,7 @@ const commonMiddleware = (handler) => {
   const vercelHandler = async (request, response) => {
 
     if (DISABLE_EVERYTHING) {
-      response.status(503).json({ error: disabledErrorMsg });
+      return response.status(503).json({ error: disabledErrorMsg });
     }
 
     const queryParams = request.query || {};
@@ -84,7 +194,7 @@ const commonMiddleware = (handler) => {
         );
       }
     } catch (error) {
-      let errorCode = 500;
+      let errorCode = error.statusCode || 500;
       if (error.message.includes('timed-out') || response.statusCode === 504) {
         errorCode = 408;
         error.message = `${error.message}\n\n${timeoutErrorMsg}`;
@@ -135,8 +245,13 @@ const commonMiddleware = (handler) => {
         });
       }
     } catch (error) {
+      let errorCode = error.statusCode || 500;
+      if (error.message.includes('timed-out')) {
+        errorCode = 408;
+        error.message = `${error.message}\n\n${timeoutErrorMsg}`;
+      }
       callback(null, {
-        statusCode: 500,
+        statusCode: errorCode,
         body: JSON.stringify({ error: error.message }),
         headers,
       });
