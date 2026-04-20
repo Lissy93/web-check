@@ -25,7 +25,7 @@ jobs:
     name: Inserts Contributors 💓
     steps:
       - name: Updates readme with contributors
-        uses: akhilmhdh/contributors-readme-action@v2.3.10
+        uses: akhilmhdh/contributors-readme-action@v2.3.11
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
         with:
