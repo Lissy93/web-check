@@ -19,15 +19,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 16
 
     - name: Cache node_modules
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: node_modules
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -68,15 +68,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 16
     
     - name: Cache node_modules
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: node_modules
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
