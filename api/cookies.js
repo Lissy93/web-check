@@ -5,7 +5,13 @@ import middleware from './_common/middleware.js';
 const getPuppeteerCookies = async (url) => {
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--single-process',
+    ],
+    executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
   });
 
   try {

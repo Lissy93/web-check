@@ -26,7 +26,7 @@ const sitemapHandler = async (url) => {
         }
 
         if (!sitemapUrl) {
-          return { skipped: 'No sitemap found' };
+          return { notApplicable: 'No sitemap.xml found on this domain' };
         }
 
         sitemapRes = await axios.get(sitemapUrl, { timeout: hardTimeOut });
@@ -42,6 +42,8 @@ const sitemapHandler = async (url) => {
   } catch (error) {
     if (error.code === 'ECONNABORTED') {
       return { error: `Request timed-out after ${hardTimeOut}ms` };
+    } else if (error.response && error.response.status === 404) {
+      return { notApplicable: 'No sitemap.xml found on this domain' };
     } else {
       return { error: error.message };
     }

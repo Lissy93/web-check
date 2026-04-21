@@ -1,8 +1,7 @@
-import dns from 'dns';
+import dns from 'dns/promises';
 import URL from 'url-parse';
 import middleware from './_common/middleware.js';
 
-// TODO: Fix.
 
 const mailConfigHandler = async (url, event, context) => {
   try {
