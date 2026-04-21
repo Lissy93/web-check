@@ -134,7 +134,7 @@ const resources = [
     link: 'https://sitecheck.sucuri.net/',
     icon: 'https://pixelflare.cc/alicia/icons/sucuri.png/w128',
     description: 'Checks a URL against blacklists and known threats',
-    searchLink: 'https://www.ssllabs.com/ssltest/analyze.html?d={URL}',
+    searchLink: 'https://sitecheck.sucuri.net/results/{URL}',
   },
   {
     title: 'Domain Tools',
