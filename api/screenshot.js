@@ -5,6 +5,7 @@ import { execFile } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';
 import pkg from 'uuid';
+import { assertSafeUrl } from './_common/ssrf.js';
 const { v4: uuidv4 } = pkg;
 
 // Helper function for direct chromium screenshot as fallback
@@ -76,25 +77,72 @@ const screenshotHandler = async (targetUrl) => {
     throw new Error('URL provided is invalid');
   }
 
-  // First try direct Chromium
-  try {
-    console.log(`[SCREENSHOT] Using direct Chromium method for URL: ${targetUrl}`);
-    const base64Screenshot = await directChromiumScreenshot(targetUrl);
-    console.log(`[SCREENSHOT] Direct screenshot successful`);
-    return { image: base64Screenshot };
-  } catch (directError) {
-    console.error(`[SCREENSHOT] Direct screenshot method failed: ${directError.message}`);
-    console.log(`[SCREENSHOT] Falling back to puppeteer method...`);
+  const allowDirect = process.env.ALLOW_DIRECT_SCREENSHOT === 'true';
+  if (allowDirect) {
+    try {
+      console.log(`[SCREENSHOT] Using direct Chromium method for URL: ${targetUrl}`);
+      const base64Screenshot = await directChromiumScreenshot(targetUrl);
+      console.log(`[SCREENSHOT] Direct screenshot successful`);
+      return { image: base64Screenshot };
+    } catch (directError) {
+      console.error(`[SCREENSHOT] Direct screenshot method failed: ${directError.message}`);
+      console.log(`[SCREENSHOT] Falling back to puppeteer method...`);
+    }
+  } else {
+    console.log('[SCREENSHOT] Direct Chromium method disabled for SSRF safety');
   }
   
+  const chromePath = process.env.CHROME_PATH || '/usr/bin/chromium';
+
+  try {
+    await fs.access(chromePath);
+  } catch (error) {
+    console.error(`[SCREENSHOT] Chromium path not accessible: ${chromePath}`);
+    throw new Error(`Chromium binary not accessible at ${chromePath}`);
+  }
+
+  try {
+    const versionInfo = await new Promise((resolve, reject) => {
+      execFile(chromePath, ['--headless', '--no-sandbox', '--disable-gpu', '--version'], (error, stdout, stderr) => {
+        if (error) {
+          reject(new Error(stderr || error.message));
+          return;
+        }
+        resolve(stdout.trim());
+      });
+    });
+    console.log(`[SCREENSHOT] Chromium version: ${versionInfo}`);
+  } catch (error) {
+    console.error(`[SCREENSHOT] Chromium launch check failed: ${error.message}`);
+    throw new Error(`Chromium launch check failed: ${error.message}`);
+  }
+
   // fall back puppeteer 
   let browser = null;
   try {
     console.log(`[SCREENSHOT] Launching puppeteer browser`);
+    const useLambdaArgs = !!(process.env.AWS_EXECUTION_ENV || process.env.AWS_LAMBDA_FUNCTION_NAME);
+    const launchArgs = useLambdaArgs
+      ? [
+        ...chromium.args,
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--no-zygote',
+      ]
+      : [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-zygote',
+        '--use-gl=swiftshader',
+        '--disable-features=UseDBus',
+      ];
+
     browser = await puppeteer.launch({
-      args: [...chromium.args, '--no-sandbox'], // Add --no-sandbox flag
+      args: launchArgs,
       defaultViewport: { width: 800, height: 600 },
-      executablePath: process.env.CHROME_PATH || '/usr/bin/chromium',
+      executablePath: chromePath,
       headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ['--disable-extensions'],
@@ -102,6 +150,19 @@ const screenshotHandler = async (targetUrl) => {
     
     console.log(`[SCREENSHOT] Creating new page`);
     let page = await browser.newPage();
+
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+      const requestUrl = request.url();
+      if (requestUrl.startsWith('data:') || requestUrl.startsWith('blob:') || requestUrl.startsWith('about:')) {
+        request.continue();
+        return;
+      }
+
+      assertSafeUrl(requestUrl)
+        .then(() => request.continue())
+        .catch(() => request.abort());
+    });
     
     console.log(`[SCREENSHOT] Setting page preferences`);
     await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
