@@ -660,7 +660,7 @@ This is useful for understanding the history of a site, and how it has changed o
 <img width="300" src="https://pixelflare.cc/alicia/web-check/wc-rank" align="right" />
 
 ###### Description
-This check shows the global rank of the requested site. This is only accurate for websites which are in the top 100 million list. We're using data from the Tranco project (see below), which collates the top sites on the web from Umbrella, Majestic, Quantcast, the Chrome User Experience Report and Cloudflare Radar.
+This check shows the global rank of the requested site. This is only accurate for websites which are in the top 1 million list. We're using data from the Tranco project (see below), which collates the top sites on the web from Umbrella, Majestic, Quantcast, the Chrome User Experience Report and Cloudflare Radar.
 
 ###### Use Cases
 Knowing a websites overall global rank can be useful for understanding the scale of the site, and for comparing it to other sites. It can also be useful for understanding the relative popularity of a site, and for identifying potential trends.
@@ -847,7 +847,7 @@ Key | Value
 ---|---
 `PORT` | Port to serve the API, when running server.js (e.g. `3000`)
 `API_ENABLE_RATE_LIMIT` | Enable rate-limiting for the /api endpoints (e.g. `true`)
-`API_TIMEOUT_LIMIT` | The timeout limit for API requests, in milliseconds (e.g. `10000`)
+`PUBLIC_API_TIMEOUT_LIMIT` | The timeout limit for API requests, in milliseconds (e.g. `25000`)
 `API_CORS_ORIGIN` | Enable CORS, by setting your allowed hostname(s) here (e.g. `example.com`)
 `CHROME_PATH` | The path the Chromium executable (e.g. `/usr/bin/chromium`)
 `DISABLE_GUI` | Disable the GUI, and only serve the API (e.g. `false`)

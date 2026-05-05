@@ -5,13 +5,22 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import historyApiFallback from 'connect-history-api-fallback';
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Create the Express app
 const app = express();
+
+const trustProxy = process.env.TRUST_PROXY;
+if (trustProxy) {
+  const parsed = /^\d+$/.test(trustProxy)
+    ? parseInt(trustProxy, 10)
+    : trustProxy === 'true' ? true
+    : trustProxy === 'false' ? false
+    : trustProxy;
+  app.set('trust proxy', parsed);
+}
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
@@ -46,7 +55,7 @@ const makeLimiterResponseMsg = (retryAfter) => {
 // Create rate limiters for each time frame
 const limiters = limits.map(limit => rateLimit({
   windowMs: limit.timeFrame * 1000,
-  max: limit.max,
+  limit: limit.max,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: makeLimiterResponseMsg(limit.messageTime) }
@@ -98,7 +107,7 @@ const renderPlaceholderPage = async (res, msgId, logs) => {
 app.get(API_DIR, async (req, res) => {
   const results = {};
   const { url } = req.query;
-  const maxExecutionTime = process.env.API_TIMEOUT_LIMIT || 20000;
+  const maxExecutionTime = process.env.PUBLIC_API_TIMEOUT_LIMIT || 60000;
 
   const executeHandler = async (handler, req) => {
     return new Promise(async (resolve, reject) => {
@@ -168,16 +177,8 @@ if (process.env.DISABLE_GUI && process.env.DISABLE_GUI !== 'false') {
     }).catch(async err => {
       renderPlaceholderPage(res, 'notCompiledSsrHandler', err.message);
     });
-  });  
+  });
 }
-
-// Handle SPA routing
-app.use(historyApiFallback({
-  rewrites: [
-    { from: new RegExp(`^${API_DIR}/.*$`), to: (context) => context.parsedUrl.path },
-    { from: /^.*$/, to: '/index.html' }
-  ]
-}));
 
 // Anything left unhandled (which isn't an API endpoint), return a 404
 app.use((req, res, next) => {

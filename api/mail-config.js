@@ -1,12 +1,10 @@
-import dns from 'dns';
-import URL from 'url-parse';
+import dns from 'dns/promises';
 import middleware from './_common/middleware.js';
+import { parseTarget } from './_common/parse-target.js';
 
-// TODO: Fix.
-
-const mailConfigHandler = async (url, event, context) => {
+const mailConfigHandler = async (url) => {
   try {
-    const domain = new URL(url).hostname || new URL(url).pathname;
+    const { hostname: domain } = parseTarget(url);
 
     // Get MX records
     const mxRecords = await dns.resolveMx(domain);
@@ -69,12 +67,8 @@ const mailConfigHandler = async (url, event, context) => {
   } catch (error) {
     if (error.code === 'ENOTFOUND' || error.code === 'ENODATA') {
       return { skipped: 'No mail server in use on this domain' };
-    } else {
-      return {
-        statusCode: 500,
-        body: { error: error.message },
-      };
     }
+    return { error: `Mail config lookup failed: ${error.message}` };
   }
 };
 

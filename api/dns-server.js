@@ -1,43 +1,25 @@
-import { promises as dnsPromises, lookup } from 'dns';
-import axios from 'axios';
+import { promises as dnsPromises } from 'dns';
 import middleware from './_common/middleware.js';
+import { httpGet } from './_common/http.js';
+import { parseTarget } from './_common/parse-target.js';
+import { upstreamError } from './_common/upstream.js';
 
 const dnsHandler = async (url) => {
+  const { hostname: domain } = parseTarget(url);
+  let addresses;
   try {
-    const domain = url.replace(/^(?:https?:\/\/)?/i, "");
-    const addresses = await dnsPromises.resolve4(domain);
-    const results = await Promise.all(addresses.map(async (address) => {
-      const hostname = await dnsPromises.reverse(address).catch(() => null);
-      let dohDirectSupports = false;
-      try {
-        await axios.get(`https://${address}/dns-query`);
-        dohDirectSupports = true;
-      } catch (error) {
-        dohDirectSupports = false;
-      }
-      return {
-        address,
-        hostname,
-        dohDirectSupports,
-      };
-    }));
-
-    // let dohMozillaSupport = false;
-    // try {
-    //   const mozillaList = await axios.get('https://firefox.settings.services.mozilla.com/v1/buckets/security-state/collections/onecrl/records');
-    //   dohMozillaSupport = results.some(({ hostname }) => mozillaList.data.data.some(({ id }) => id.includes(hostname)));
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
-    return {
-      domain,
-      dns: results,
-      // dohMozillaSupport,
-    };
+    addresses = await dnsPromises.resolve4(domain);
   } catch (error) {
-    throw new Error(`An error occurred while resolving DNS. ${error.message}`); // This will be caught and handled by the commonMiddleware
+    return upstreamError(error, 'DNS server lookup');
   }
+  const results = await Promise.all(addresses.map(async (address) => {
+    const hostname = await dnsPromises.reverse(address).catch(() => null);
+    const dohDirectSupports = await httpGet(`https://${address}/dns-query`)
+      .then(() => true)
+      .catch(() => false);
+    return { address, hostname, dohDirectSupports };
+  }));
+  return { domain, dns: results };
 };
 
 
