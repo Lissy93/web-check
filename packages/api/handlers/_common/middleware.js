@@ -116,4 +116,10 @@ const commonMiddleware = (handler) => {
   return nativeMode ? vercelHandler : netlifyHandler;
 };
 
+// Netlify bundles handlers as CJS, esbuild's interop loses the default export
+// unless module.exports is the function itself. Do not remove the CJS branch
+if (PLATFORM === 'NETLIFY') {
+  module.exports = commonMiddleware;
+}
+
 export default commonMiddleware;
