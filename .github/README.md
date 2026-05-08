@@ -900,9 +900,9 @@ Install the prerequisites listed in the [Developing](#developing) section, then 
 ```bash
 git clone https://github.com/Lissy93/web-check.git  # Download the code from GitHub
 cd web-check                                        # Navigate into the project dir
-yarn install                                        # Install the NPM dependencies
-yarn build                                          # Build the app for production
-yarn serve                                          # Start the app (API and GUI)
+yarn install                                        # Install workspace dependencies
+yarn build                                          # Build the api wrappers, app and site
+yarn start                                          # Run the Express server (api and GUI)
 ```
 
 ---
@@ -947,7 +947,8 @@ But there are some optional environmental variables that you can set to give you
 | `API_CORS_ORIGIN`          | Enable CORS, by setting your allowed hostname(s) here (e.g. `example.com`) |
 | `CHROME_PATH`              | The path the Chromium executable (e.g. `/usr/bin/chromium`)                |
 | `DISABLE_GUI`              | Disable the GUI, and only serve the API (e.g. `false`)                     |
-| `REACT_APP_API_ENDPOINT`   | The endpoint for the API, either local or remote (e.g. `/api`)             |
+| `PUBLIC_API_ENDPOINT`      | The endpoint for the API, either local or remote (e.g. `/api`)             |
+| `APP_STATIC_DIR`           | Override path to the built React app (defaults to `packages/app/dist`)     |
 
 All values are optional.
 
@@ -964,7 +965,7 @@ Note that keys that are prefixed with `REACT_APP_` are used client-side, and as 
 3. Install dependencies: `yarn`
 4. Start the dev server, with `yarn dev`
 
-You'll need [Node.js](https://nodejs.org/en) (V 18.16.1 or later) installed, plus [yarn](https://yarnpkg.com/getting-started/install) as well as [git](https://git-scm.com/).
+You'll need [Node.js](https://nodejs.org/en) (V 22 or later) installed, plus [yarn](https://yarnpkg.com/getting-started/install) as well as [git](https://git-scm.com/).
 Some checks also require `chromium`, `traceroute` and `dns` to be installed within your environment. These jobs will just be skipped if those packages aren't present.
 
 ---

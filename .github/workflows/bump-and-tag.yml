@@ -68,7 +68,7 @@ jobs:
               github.rest.pulls.listFiles, { owner, repo, pull_number }
             );
             const codePatterns = [
-              /^src\//, /^api\//, /^public\//, /^Dockerfile$/, /^[^/]+\.(js|mjs)$/,
+              /^packages\//, /^scripts\//, /^Dockerfile$/, /^[^/]+\.(js|mjs)$/,
             ];
             const codeChanged = files.some(f =>
               codePatterns.some(p => p.test(f.filename))

@@ -10,6 +10,12 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', '.astro/', '.netlify/', '.vercel/'],
+    ignores: [
+      '**/dist/',
+      '**/node_modules/',
+      '.astro/',
+      '.netlify/',
+      '.vercel/',
+    ],
   },
 ];

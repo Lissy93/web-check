@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@layouts/Base.astro';
+import Main from '@web-check/app/main';
+import '@web-check/app/styles/index.css';
+---
+
+<BaseLayout>
+  <Main client:only="react" />
+</BaseLayout>
+
+<script>
+  // Hand off ?url=foo form submissions to the React Router path
+  const params = new URL(window.location.href).searchParams;
+  if (params.has('url')) {
+    window.location.href = `/check/${encodeURIComponent(params.get('url') || '')}`;
+  }
+
+  const form = document.querySelector<HTMLFormElement>('form');
+  if (form) {
+    form.addEventListener('submit', function (event: Event) {
+      event.preventDefault();
+      const input = (this as HTMLFormElement).querySelector<HTMLInputElement>(
+        'input[name="url"]',
+      );
+      if (input && input.value) {
+        window.location.href = `/check/${encodeURIComponent(input.value)}`;
+      }
+    });
+  }
+</script>

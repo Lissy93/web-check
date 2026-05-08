@@ -4,13 +4,7 @@
     "module": "ES2020",
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
-    "plugins": [
-      {
-        "name": "@astrojs/ts-plugin"
-      }
-    ],
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -22,14 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
-      "@components/*": ["components/*"],
-      "@layouts/*": ["layouts/*"],
-      "@pages/*": ["pages/*"],
-      "@styles/*": ["styles/*"],
-      "@assets/*": ["assets/*"]
+      "web-check-live/*": ["src/*"]
     }
   },
   "include": ["src"]

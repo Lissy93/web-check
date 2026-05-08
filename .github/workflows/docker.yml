@@ -8,9 +8,8 @@ on:
     tags:
       - '*'
     paths:
-      - src/**
-      - api/**
-      - public/**
+      - packages/**
+      - scripts/**
       - Dockerfile
 
 permissions:

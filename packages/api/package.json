@@ -1,0 +1,28 @@
+{
+  "name": "@web-check/api",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "DISABLE_GUI='true' PORT='3001' nodemon server.js"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^148.0.0",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.0",
+    "psl": "^1.15.0",
+    "puppeteer": "^24.42.0",
+    "puppeteer-core": "^24.42.0",
+    "wappalyzer": "^6.10.66",
+    "whoiser": "^2.0.0-beta.10",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
