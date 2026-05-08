@@ -53,8 +53,7 @@ const sync = () => {
   }
 
   process.stdout.write(
-    `Vercel api wrappers: ${sources.length} total, ` +
-      `${written} written, ${removed} removed\n`,
+    `Vercel api wrappers: ${sources.length} total, ` + `${written} written, ${removed} removed\n`,
   );
 };
 

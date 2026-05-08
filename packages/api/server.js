@@ -18,8 +18,7 @@ const PORT = parseInt(process.env.PORT || '3000', 10);
 const API_DIR = '/api';
 const HANDLERS_DIR = path.join(__dirname, 'handlers');
 const STATIC_DIR = path.join(__dirname, 'static');
-const APP_DIST = process.env.APP_STATIC_DIR
-  || path.resolve(__dirname, '..', 'app', 'dist');
+const APP_DIST = process.env.APP_STATIC_DIR || path.resolve(__dirname, '..', 'app', 'dist');
 const APP_INDEX = path.join(APP_DIST, 'index.html');
 
 // Tells middleware to use the express-style handler signature
