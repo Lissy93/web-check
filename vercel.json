@@ -1,15 +1,13 @@
 {
   "version": 2,
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1.js"
-    }
+  "buildCommand": "yarn build",
+  "outputDirectory": "packages/site/dist",
+  "rewrites": [
+    { "source": "/check", "destination": "/check/index.html" },
+    { "source": "/check/:path*", "destination": "/check/index.html" }
   ],
   "functions": {
-    "api/*.js": {
-      "maxDuration": 20
-    }
+    "api/*.js": { "maxDuration": 20 }
   },
   "env": {
     "PLATFORM": "vercel",
@@ -17,8 +15,6 @@
     "CHROME_PATH": "/usr/bin/chromium"
   },
   "build": {
-    "env": {
-      "PLATFORM": "vercel"
-    }
+    "env": { "PLATFORM": "vercel" }
   }
 }

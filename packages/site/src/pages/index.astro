@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@layouts/Base.astro';
+import HeroForm from '@components/homepage/HeroForm.astro';
+import TempDisabled from '@/components/homepage/TempDisabled.astro';
+import HomeBackground from '@/components/homepage/HomeBackground';
+import AboutSection from '@/components/homepage/AboutSection.astro';
+import Footer from '@components/scafold/Footer.astro';
+
+const disableEverything = import.meta.env.VITE_DISABLE_EVERYTHING === true;
+---
+
+<BaseLayout>
+  {disableEverything && <TempDisabled />}
+  <main>
+    <HeroForm />
+    <AboutSection />
+  </main>
+  <Footer />
+  <HomeBackground client:only="react" />
+</BaseLayout>
+
+<style lang="scss">
+  @use '@styles/global.scss' as *;
+  main {
+    min-height: 100vh;
+    padding: 2rem;
+    margin: 0 auto;
+    z-index: 3;
+    background: var(--background);
+    @include tablet-landscape-down {
+      width: 96vw;
+    }
+
+    .screenshot {
+      transform: rotate3d(0.5, -0.866, 0, 15deg) rotate(1deg);
+      box-shadow:
+        2em 4em 6em -2em rgba(0, 0, 0, 0.5),
+        1em 2em 3.5em -2.5em rgba(0, 0, 0, 0.5);
+      transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+      border-radius: 0.5em;
+
+      &:hover {
+        transform: rotate3d(0, 0, 0, 0deg) rotate(0deg);
+      }
+    }
+  }
+</style>

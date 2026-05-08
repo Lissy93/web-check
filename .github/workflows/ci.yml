@@ -105,12 +105,20 @@ jobs:
 
       - name: ✅ Verify Build Output
         run: |
-          if [ ! -d "dist/client" ]; then
-            echo "❌ Build failed: dist/client directory not created"
+          if [ ! -f "packages/site/dist/index.html" ]; then
+            echo "❌ Build failed: site index not found"
             exit 1
           fi
-          if [ ! -f "dist/server/entry.mjs" ]; then
-            echo "❌ Build failed: SSR entry not found"
+          if [ ! -f "packages/site/dist/check/index.html" ]; then
+            echo "❌ Build failed: check SPA shell not found"
+            exit 1
+          fi
+          if [ ! -f "packages/app/dist/index.html" ]; then
+            echo "❌ Build failed: app standalone build not found"
+            exit 1
+          fi
+          if [ "$(ls -1 api/*.js 2>/dev/null | wc -l)" -lt 30 ]; then
+            echo "❌ Build failed: vercel api wrappers not generated"
             exit 1
           fi
           echo "✅ Build successful"

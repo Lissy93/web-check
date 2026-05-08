@@ -1,0 +1,36 @@
+{
+  "name": "@web-check/app",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./main": "./src/main.tsx",
+    "./styles/*": "./src/styles/*",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "framer-motion": "^12.38.0",
+    "prop-types": "^15.8.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-masonry-css": "^1.0.16",
+    "react-router-dom": "^7.14.2",
+    "react-simple-maps": "^3.0.0",
+    "react-toastify": "^11.1.0",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "^6.0.3",
+    "vite": "^7.2.0"
+  }
+}
